@@ -1,0 +1,19 @@
+<script>
+	let pr = new Promise((res, rej) => {
+		setTimeout(() => {
+			res("done");
+		});
+	}, 100);
+
+	pr
+	.then((data) => {
+		console.log("then", data);
+		},(error) => {
+		console.log("error", error);
+		}
+	).catch(() => {
+
+	}).finally(() => {
+		
+	});
+</script>

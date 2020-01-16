@@ -1,0 +1,16 @@
+<script>
+	function loadScript(src) {
+		return new Promise((resolve, reject) => {
+			debugger;
+			let ele = document.createElement("script");
+			ele.src = src;
+			ele.onload = () => resolve("loaded");
+			ele.onerror = () => reject(new Error("not loaded"));
+			document.head.append(ele);
+		});
+	}
+
+	loadScript("https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js")
+		.then((data) => console.log(data))
+		.catch((err) => console.log(err));
+</script>

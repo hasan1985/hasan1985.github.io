@@ -1,0 +1,10 @@
+ToDo
+
+https://javascript.info/task/animate-circle-callback
+
+
+important items - 
+1. https://javascript.info/promise-chaining#returning-promises
+2. write two local script containing 2 function, load one after another asynchorniousely, then call those function
+	https://javascript.info/promise-chaining#example-loadscript
+3. 

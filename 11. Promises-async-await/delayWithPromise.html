@@ -1,0 +1,9 @@
+<script>
+	function delay(delay) {
+		return new Promise((resolve) => {
+			setTimeout(resolve, delay); 
+		});
+	}
+	delay(1000).then(() => console.log("delayed"));
+	
+</script>

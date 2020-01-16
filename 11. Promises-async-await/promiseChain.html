@@ -1,0 +1,15 @@
+write a script to alert 2,4.8 in 1 min interval using promise
+<script>
+	new Promise((resolve, reject) => {
+		setTimeout(resolve(2), 1000);
+	}).then(data => {
+		alert(data);
+		return new Promise( resolve => setTimeout(resolve(data * 2), 1000) );
+	}).then(data => {
+		alert(data);
+		return new Promise( resolve => setTimeout(resolve(data * 2), 1000) );
+	}).then(data => {
+		alert(data);
+		return new Promise( resolve => setTimeout(resolve(data * 2), 1000) )
+	});
+</script>
