@@ -1,0 +1,9 @@
+ReviseCode
+
+1. https://javascript.info/promise-chaining#bigger-example-fetch
+2. then after catch block in a chain - https://javascript.info/promise-error-handling#rethrowing
+3. usually you have to reject (call reject()) a promise to get the next catch block executed. but if
+	and error occurs  during the promise executions then the catch block will execute even w/o reject
+	exe - https://javascript.info/promise-error-handling#implicit-try-catch
+4. promisification - 
+5. what is `window.addEventListener('unhandledrejection', () => {});` 
