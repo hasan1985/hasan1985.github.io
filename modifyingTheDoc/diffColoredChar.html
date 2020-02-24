@@ -1,0 +1,24 @@
+<html>
+
+<style>
+</style>
+
+<body>
+<div id="output">
+</div>
+
+
+<script>
+let colors = ["red", "blue", "green"]
+let text = "sdfsdffsdf";
+let output = document.getElementById("output");
+for (let i = 0; i < text.length; i++) {
+  let span = document.createElement("span");
+  span.style = `color: ${colors[i % 3]}`;
+  span.innerHTML = text[i];
+  output.append(span);
+}
+</script>
+
+</body>
+</html>

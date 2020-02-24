@@ -1,0 +1,28 @@
+<html>
+
+<style>
+</style>
+
+<body>
+
+
+<script>
+Array.prototype.myReduce = function(func) {
+    let total = this[0];
+    for (let i = 1; i < this.length; i++) {
+        total = func.call(this, total, this[i]); // works
+        // total = func.apply(this, [total, this[i]]); // works
+        // total = func(total, this[i]); //works
+    }
+    return total;
+}
+
+let arr = [1,2,3,4];
+let total = arr.myReduce(function (total, a) {
+    return total + a;
+})
+console.log(total);
+</script>
+
+</body>
+</html>

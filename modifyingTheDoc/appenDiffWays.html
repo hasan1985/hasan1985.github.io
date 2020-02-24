@@ -1,0 +1,32 @@
+<html>
+
+<style>
+</style>
+
+<body>
+<div id="output">
+</div>
+<div id="output2">
+</div>
+<div id="output3">
+</div>
+
+
+<script>
+let op = document.getElementById("output");
+let ele = document.createElement("div");
+ele.innerHTML = "<div style='color: red'>hi</div>";
+let txEle = document.createTextNode("I am just a text node");
+
+op.append(ele);
+op.append(txEle);
+op.append(" txEle");
+document.getElementById("output2").innerHTML = "<div>innerHTML</div>"
+document.getElementById("output3").textContent = "<div>textContent</div>";
+
+
+
+</script>
+
+</body>
+</html>

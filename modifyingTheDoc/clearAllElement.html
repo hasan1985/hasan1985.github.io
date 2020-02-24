@@ -1,0 +1,33 @@
+<html>
+
+<style>
+</style>
+
+<body>
+
+<ol id="elem">
+  <li>Hello</li>
+  <li>World</li>
+</ol>
+
+<script>
+  function clear(elem) { 
+    // elem.querySelectorAll("*").forEach(e => e.remove()); // this works
+
+    // or
+    for (let i = 0; i < elem.childNodes.length; i++) {
+        elem.childNodes[i].remove(); // doesn't work, because remove shifts the array elements.
+        console.log(elem.childNodes[i]);
+    }
+
+    while(elem.firstChild) { //
+        elem.firstChild.remove(); // this works
+    }
+
+  }
+
+  clear(elem); // clears the list
+</script>
+
+</body>
+</html>

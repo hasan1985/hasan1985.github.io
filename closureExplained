@@ -1,0 +1,26 @@
+//closure
+// run this script in chrome and see the [[Scopes]] field in console. 
+// we ll see closure object there, containing outer variable used in inner2 function;
+
+function outer() {
+
+  let outerLocal = 10;
+  let outerLoca2 = 30;
+  
+  function inner() {
+  
+  	let innerLocal = 20;
+    
+  	function inner2() {
+    	let inner2Local = 50;
+      return outerLocal + innerLocal + inner2Local;
+    }
+    
+    return inner2;
+  }
+  
+  return inner();
+}
+
+let inner = outer();
+console.dir(inner)

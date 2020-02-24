@@ -1,0 +1,29 @@
+<html>
+
+<style>
+body * {
+    margin: 10px;
+    border: 1px solid black; 
+}
+</style>
+
+<body>
+    <form>
+        Form
+        <div>
+            Div
+            <p>P</p>
+        </div>
+    </form>
+
+<script>	
+    for (let ele of document.querySelectorAll("*")) {
+        ele.addEventListener("click", e => console.log("capturing", ele.tagName), true);
+        ele.addEventListener("click", e => console.log("bubbling",ele.tagName));
+    }
+</script>
+
+
+</body>
+
+</html>

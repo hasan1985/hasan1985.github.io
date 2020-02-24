@@ -1,0 +1,11 @@
+PrototypeVsInstance
+
+https://stackoverflow.com/questions/32114191/instance-property-vs-prototype-property
+
+https://medium.com/better-programming/prototypes-in-javascript-5bba2990e04b
+
+https://www.tutorialsteacher.com/javascript/inheritance-in-javascript
+
+https://javascript.info/prototype-inheritance
+
+1. function has its own prototype field, but any object don't have its own 

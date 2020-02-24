@@ -1,0 +1,8 @@
+protoTypeNodeFromDeveloperMozillaOrg
+
+1.
+let o = {a: 1};
+o -> object.prototype -> null
+
+let array = ["a","b"];
+array. -> 

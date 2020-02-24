@@ -1,0 +1,28 @@
+<html>
+
+<style>
+</style>
+
+<body>
+Counter1 <input type="button" data-counter="1" value="1">
+Counter2 <input type="button" data-counter="2" value="2">
+result <input type="text" id="result" value="0">
+
+<script>
+document.onclick = function(event) {
+    let value = Number.parseInt(document.getElementById("result").value);
+    let target = event.target;
+    console.log(target);
+    if (target.dataset.counter) {
+        if (target.value === "1")
+            document.getElementById("result").value = value + Number.parseInt(target.dataset.counter) * 1;
+        if (target.value === "2")
+            document.getElementById("result").value = value + Number.parseInt(target.dataset.counter) * 2;
+    }
+}
+</script>
+
+</body>
+
+
+</html>
