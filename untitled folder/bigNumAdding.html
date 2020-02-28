@@ -1,0 +1,54 @@
+<html>
+
+<style>
+	#num_a, #num_b, #output {
+		width: 500px;
+		margin: 10px;
+		height: 30px;
+		border: 2px solid gray;
+	}
+
+	#button {
+		width: 100px;
+		margin: 10px;
+		height: 30px;
+	}
+</style>
+
+<div>
+	<input type="text" id="num_a"><br/>
+	<input type="text" id="num_b"><br/>
+	<input id="button" type="button" value= "submit" onclick="onClick()">
+	<div id="output"></div>
+</div>
+
+<body>
+
+<script>
+	function onClick() {
+		let a = document.getElementById("num_a").value;
+		let b = document.getElementById("num_b").value;
+		let output = document.getElementById("output");
+
+		if (isNaN(a) || isNaN(b)) {
+			output.innerText = "no a number"
+		} else {
+			let maxLen = Math.max(a.length, b.length) + 1;
+			let x = a.padStart(maxLen, "0");
+			let y = b.padStart(maxLen, "0");
+			let op = [];
+			let carry = 0;
+
+			for (let i = maxLen - 1; i >= 0; i--) {
+				let sum = (x[i] - '0') + (y[i] - '0') + carry;
+				op.push(sum % 10);
+				carry = Math.floor(sum / 10);
+			}
+
+			output.innerText = op.reverse().join("").replace(/^0+/, "");	
+		}
+	}
+</script>
+
+</body>
+</html>
