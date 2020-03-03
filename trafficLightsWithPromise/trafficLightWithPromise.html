@@ -1,0 +1,115 @@
+<html>
+
+<style>
+	.light {
+		width: 50px;
+		height: 50px;
+		border: 1px solid black;
+		background:;
+	}
+</style>
+
+<body>
+<div>
+	Given 3 lights for a traffic signal. <br>
+	A function (ligh) to toggle any of the three lights. The toggle function throw error 50% of the time. <br>
+	Write three functions "setGreen", "setYellow", "setRed" where each call the next one in the <br>
+	sequence with 1000ms interval. The next func should be called from a promise.then() block.  <br> 
+	Green, yellow, red must be lit in sequence even if the toggle func thorws error. <br>
+	When there is the error print the error from promise object. <br>
+</div>
+<div id="green" class="light"></div>
+<div id="yellow" class="light"></div>
+<div id="red" class="light"></div>
+
+<script>
+let gre = document.getElementById("green");
+let yel = document.getElementById("yellow");
+let red = document.getElementById("red");
+
+function light(ele, color) {
+	if (Math.floor(Math.random()*10) < 5) throw Error("");
+
+	gre.style.background = "none";
+	yel.style.background = "none";
+	red.style.background = "none";
+	ele.style.background = color;
+}
+
+function setGreen() {
+	new Promise((resolve, rejecct) => {
+		light(gre, "green");
+		setTimeout(() => resolve(), 1000);
+	}).then(() => {
+		setYellow()	;
+	}).catch(() => {
+		console.log("failed to turn green light on");
+		setGreen();
+	});
+}
+function setYellow() {
+	new Promise((resolve, reject) => {
+		light(yel, "yellow");
+		setTimeout(() => resolve(), 1000);
+	}).then(() => {
+		setRed();
+	}).catch(() => {
+		console.log("failed to turn yellow light on")
+		setYellow();
+	})
+}
+function setRed() {
+	new Promise((resolve, reject) => {
+		light(red, "red");
+		setTimeout(() => resolve(), 1000);
+	}).then(() => {
+		setGreen();
+	}).catch(() => {
+		console.log("failed to turn on red light");
+		setRed();
+	});
+}
+
+setGreen();
+
+/*
+
+function setGreen() {
+	light(gre, "green");
+	return new Promise((rs) => setTimeout(() => rs(), 1000) );
+}
+function setYellow() {
+	light(yel, "yellow");
+	return new Promise((rs) => setTimeout(() => rs(), 500) );
+}
+function setRed() {
+	light(red, "red");
+	return new Promise((rs) => setTimeout(() => rs(), 1000) );
+}
+
+// solution 1
+runLight();
+function runLight() {
+	setGreen().then(() => {
+		return setYellow();
+	}).then(() => {
+		return setRed();
+	}).then(() => {
+		runLight();
+	})
+}
+
+// solution 2
+let promises = [setGreen, setYellow, setRed];
+nextLight();
+function nextLight(cur = 0) {
+	promises[cur]().then(() => {
+		nextLight((cur+1)%3);
+	});
+}
+*/
+
+</script>
+
+</body>
+</html>

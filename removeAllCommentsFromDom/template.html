@@ -1,0 +1,51 @@
+<html>
+
+<style>
+</style>
+
+<body><!-- comment 1-->
+<div>
+	remove all comments from the body element
+</div>
+
+<div>element-1</div>
+	<!-- comment 2-->
+	<!-- comment 3-->
+<div>elment-2
+	<!-- comment 4-->
+	<div>element-2-1
+		<div>element2-1-1
+			<!-- comment 5-->
+		</div>
+	</div>
+	<div>
+		<!-- comment 6-->
+	</div>
+	<div>
+		<div>
+			<!-- comment 7-->
+			<!-- comment 8-->
+			<!-- comment 9-->
+		</div>
+	</div>
+</div>
+
+
+<script>
+
+removeComment(document.body);
+function removeComment(ele) {
+	for (let n of ele.childNodes) {
+		if (n.nodeName === "#comment") {
+			n.remove();
+			console.log("removing", n.nodeValue);
+		} else {
+			removeComment(n);
+		}
+	}
+}
+
+</script>
+
+</body>
+</html>
