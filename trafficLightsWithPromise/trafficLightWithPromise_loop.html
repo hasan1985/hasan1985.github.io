@@ -1,0 +1,89 @@
+<html>
+
+<style>
+	.trafficLight {
+		width: 50px;
+		height: 50px;
+		border: 1px solid black;
+	}
+</style>
+
+<body>
+<div>
+	Given 3 lights for a traffic signal. <br>
+	toggleLight() is to toggle these lights which throws error 50% of the time. <br>
+	switchToGreen(), switchToYellow(), switchToRed() can be used to switch any of these lights <br>
+	Write three functions "setGreenAndWait()", "setYellowAndWait()", "setRedAndWait()" 
+	those return promises those resolved after some delay <br>
+	create a chain with these promises so that green, red yellow keep altering with respective delays. <br>
+	you should maintain the same sequence of light even if there is an error while toggoling a light.<br>
+</div>
+
+<div id="green" class="trafficLight"></div>
+<div id="yellow" class="trafficLight"></div>
+<div id="red" class="trafficLight"></div>
+
+<script>
+let gre = document.getElementById("green");
+let yel = document.getElementById("yellow");
+let red = document.getElementById("red");
+
+function toggleLight(ele, color) {
+	if (Math.floor(Math.random()*10) < 5) {
+		console.log("error while toggling ", color);
+		throw Error("");
+	}
+
+	gre.style.background = "none";
+	yel.style.background = "none";
+	red.style.background = "none";
+	ele.style.background = color;
+}
+
+let switchToGreen = () => toggleLight(gre, "green");
+let switchToYellow = () => toggleLight(yel, "yellow");
+let switchToRed = () => toggleLight(red, "red");
+
+function setGreenAndWait() { // return a promise that will be resolved after 2 sec
+	return new Promise((resolve, reject) => {
+		switchToGreen();
+		setTimeout(() => resolve("done"), 1000);
+	}).catch(() => {
+		return setGreenAndWait();
+	});
+}
+function setYellowAndWait() { // return a promise that will be resolved after 0.5 sec
+	return new Promise((resolve, reject) => {
+		switchToYellow()
+		setTimeout(() => resolve("done"), 1000);
+	}).catch(() => {
+		return setYellowAndWait();
+	});
+}
+function setRedAndWait() { // return a promise that will be resolved after 1 sec
+	return new Promise((resolve, reject) => {
+		switchToRed();
+		setTimeout(() => resolve("done"), 1000);
+	}).catch(() => {
+		return setRedAndWait();
+	});
+}
+
+let idle = true;
+setInterval(() => {
+	if (idle) {
+		idle = false;
+		setGreenAndWait().then(() => {
+			return setYellowAndWait();
+		}).then(() => {
+			return setRedAndWait();
+		}).then(() => {
+			idle = true;
+		})
+	}
+}, 100);
+
+</script>
+
+</body>
+</html>

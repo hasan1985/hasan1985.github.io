@@ -71,7 +71,6 @@ function setRed() {
 }
 
 setGreen();
-// this is a recursive solution, problem with this sol is that increases function stack unnecessarly.
 
 /*
 
@@ -88,7 +87,7 @@ function setRed() {
 	return new Promise((rs) => setTimeout(() => rs(), 1000) );
 }
 
-// solution 1 recusive
+// solution 1
 runLight();
 function runLight() {
 	setGreen().then(() => {
@@ -100,7 +99,7 @@ function runLight() {
 	})
 }
 
-// solution 2 recursive
+// solution 2
 let promises = [setGreen, setYellow, setRed];
 nextLight();
 function nextLight(cur = 0) {

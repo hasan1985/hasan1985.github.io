@@ -11,7 +11,7 @@ show servay question based on user picked ans
 show email folder structure from flat list
 
 find out some promise related question
-
+promisify a function - https://javascript.info/promisify
 
 
 ToDo - 
@@ -20,6 +20,7 @@ implement iterator for a custom object
 Read the pollyfil section
 Read the promise section
 Finish workday question
+Design a stop watch UI with JS asynchronous functions
 
 Finish atlassian object flattening question 
 
