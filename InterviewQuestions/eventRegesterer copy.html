@@ -1,0 +1,35 @@
+<html>
+<style>
+</style>
+<body>
+
+<div style="width: 800px;">
+	create an event emitter object. It can regsiter events by name
+	and callbacks as "emitter.addEvent(name, callback)".
+	It emitter.emit(eventName, param1, param2,...) should call the 
+	callback functions with the params; 'emitter.addEvent' should be able to
+	register multiple call back with same event name.
+	'emitter.addEvent' should return a subsciption object on which consumer
+	can call subscription.release() to removed a single callback function
+	that was registered.
+</div>
+
+<div style="width: 800px">
+	usage <br>
+	let emitter = new Emitter(); <br>
+	let sub1 = emitter.addEvent("event1", callback1); <br>
+	let sub2 = emitter.addEvent("event1", callback2); <br>
+	let sub3 = emitter.addEvent("event2", callback3); <br>
+	emitter.emit("event1", param1, param2, param3) // should call callback1, callback2 with all 3 params; <br>
+	sub1.release() // should remove the callback1 <br>
+	emitter.emit("event1", param1, param2, param3) // now it should call only callback2 with all 3 params; <br>
+	sub3.release() // should remove callback3; <br>
+	emitter.emit("event2"); // should not call any callback since the only callback "callback3" was registered unde that event <br>
+</div>
+
+<script>
+
+</script>
+
+</body>
+</html>
