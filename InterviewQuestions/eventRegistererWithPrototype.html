@@ -24,7 +24,7 @@
 	sub1.release() // should remove the callback1 <br>
 	emitter.emit("event1", param1, param2, param3) // now it should call only callback2 with all 3 params; <br>
 	sub3.release() // should remove callback3; <br>
-	emitter.emit("event2"); // should not call any callback since the only callback "callback3" was registered unde that event <br>
+	emitter.emit("event2"); // should not call any callback since the only callback "callback3" that was registered is released<br>
 </div>
 
 <script>

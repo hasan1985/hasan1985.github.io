@@ -1,0 +1,97 @@
+<html>
+
+<style>
+	.box {
+		margin: 20px;
+		padding: 20px;
+		width: 300px;
+		border: 1px solid black;
+	 	min-height: 200px; 
+		display: inline-block;
+		vertical-align: top;
+	}
+</style>
+
+<body>
+
+<div>
+	user clicks on menu item. <br/>
+	barista if not busy picks up an item and stay busy for long the items takes to make. <br/>
+	once done the item gets moved to finish list. <br/>
+	the item stays in finsih list for 3 sec then disapears. <br/>
+</div>
+
+<div id="menu" class="box">
+	<ul>
+		<li><p>
+			<span>Mocha1</span>
+			<span>1 seconds</span>
+		</p></li>
+		<li><p>
+			<span>Mocha2</span>
+			<span>2 seconds</span>
+		</p></li>
+		<li><p>
+			<span>Mocha3</span>
+			<span>3 seconds</span>
+		</p></li>
+	</ul>
+</div>
+
+<div id="inProg" class="box">
+	<ul>		
+	</ul>
+</div>
+
+<div id="finish" class="box">
+	<ul>		
+	</ul>
+</div>
+
+<script>
+	let inProgress = [];
+	let finish = [];
+	let busy = false;
+
+	document.getElementById("menu").onclick = (e) => {
+		let p = e.target.closest("p");
+		let itemName = p.children[0].innerText;
+		let time = Number.parseInt(p.children[1].innerText.split(" ")[0]);
+		inProgress.push([itemName, time]);
+		updateList("inProg", inProgress);
+	}
+
+	function updateList(eleId, list) {
+		let ulEle = document.getElementById(eleId).children[0];
+		ulEle.innerHTML = "";
+		for (let i of list) {
+			let liEle = document.createElement("li");
+			liEle.innerText = i[0];
+			ulEle.append(liEle);
+		}
+	}
+
+	setInterval(() => {
+		if (!busy && inProgress.length > 0) {
+			cur = inProgress[0];
+			busy = true;
+			setTimeout(() => {
+				inProgress = inProgress.slice(1);
+				updateList("inProg", inProgress);
+
+				finish.push(cur);
+				updateList("finish", finish);
+				busy = false;
+
+				setTimeout(() => {
+					finish = finish.slice(1);
+					updateList("finish", finish);
+				}, 3 * 1000);
+
+			}, cur[1] * 1000);
+		}
+	}, 200)
+</script>
+
+</body>
+</html>
