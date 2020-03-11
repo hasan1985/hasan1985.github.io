@@ -5,11 +5,11 @@
 
 <div style="width: 800px;">
 	create an event emitter object. It can regsiter events by name
-	and callbacks as "emitter.addEvent(name, callback)".
+	and callbacks as "emitter.regesterEvent(name, callback)".
 	It emitter.emit(eventName, param1, param2,...) should call the 
-	callback functions with the params; 'emitter.addEvent' should be able to
+	callback functions with the params; 'emitter.regesterEvent' should be able to
 	register multiple call back with same event name.
-	'emitter.addEvent' should return a subsciption object on which consumer
+	'emitter.regesterEvent' should return a subsciption object on which consumer
 	can call subscription.release() to removed a single callback function
 	that was registered.
 </div>
@@ -17,9 +17,9 @@
 <div style="width: 800px">
 	usage <br>
 	let emitter = new Emitter(); <br>
-	let sub1 = emitter.addEvent("event1", callback1); <br>
-	let sub2 = emitter.addEvent("event1", callback2); <br>
-	let sub3 = emitter.addEvent("event2", callback3); <br>
+	let sub1 = emitter.regesterEvent("event1", callback1); <br>
+	let sub2 = emitter.regesterEvent("event1", callback2); <br>
+	let sub3 = emitter.regesterEvent("event2", callback3); <br>
 	emitter.emit("event1", param1, param2, param3) // should call callback1, callback2 with all 3 params; <br>
 	sub1.release() // should remove the callback1 <br>
 	emitter.emit("event1", param1, param2, param3) // now it should call only callback2 with all 3 params; <br>
@@ -29,67 +29,70 @@
 
 <script>
 
-function Emitter() {
-	this.eventRegistry = {};
-}
+class Emitter {
+	constructor() {
+		this.eventRegistry = {};
+	}
 
-Emitter.prototype.addEvent = function(name, callback) {
-	let subscription = {
-		callback: callback,
-		release: function() {
-			let subList = this.eventRegistry[name];
-			for (let i = 0; i < subList.length; i++) {
-				if (subList[i] === subscription) {
-					console.log("deleting");
-					subList.splice(i,1);    // need to know how to delete items from array without holes
-				}
+	registerEvent(eventName, callback) {
+		let sub = {
+			callback: callback,
+			release: () => this.removeSub(eventName, sub)
+		}
+		if (this.eventRegistry[eventName] === undefined) {
+			this.eventRegistry[eventName] = [];
+		}
+		this.eventRegistry[eventName].push(sub);
+		return sub;
+	}
+
+	removeSub(eventName, sub) {
+		let subList = this.eventRegistry[eventName];
+		let subIndex = subList.indexOf(sub);
+		if (subIndex > -1) {
+			subList.splice(subIndex, 1);
+		}
+	}
+
+	emit(eventName, ...arg) {
+		if (this.eventRegistry[eventName]) {
+			for (let sub of this.eventRegistry[eventName]) {
+				sub.callback(...arg);
 			}
-		}.bind(this)
-	}
-
-	if (this.eventRegistry[name] === undefined) {
-		this.eventRegistry[name] = [subscription];
-	} else {
-		this.eventRegistry[name].push(subscription);
-	}
-
-	return subscription;
-}
-
-Emitter.prototype.emit = function(eventName, ...args) { // need to know how spread operator works
-	if (this.eventRegistry[eventName]) {
-		for (let sub of this.eventRegistry[eventName]) {
-			sub.callback(...args);
 		}
 	}
 }
 
 // testing
-
 let emitter = new Emitter();
 
-let e1sub1 = emitter.addEvent("event1", function(p1, p2, p3) {
+let e1sub1 = emitter.registerEvent("event1", function(p1, p2, p3) {
 	console.log(`event1 sub1 callback with ${p1}, ${p2}, ${p3}, end of param`);
 });
 
-let e1sub2 = emitter.addEvent("event1", function(p1, p2, p3) {
+let e1sub2 = emitter.registerEvent("event1", function(p1, p2, p3) {
 	console.log(`event1 sub2 callback with ${p1}, ${p2}, ${p3}, end of param`);
 });
 
-let e2sub1 = emitter.addEvent("event2", function(p1, p2, p3) {
+let e2sub1 = emitter.registerEvent("event2", function(p1, p2, p3) {
 	console.log(`event2 sub1 callback with ${p1}, ${p2}, ${p3}, end of param`);
 })
 
+console.log("should print event1 with sub1 and sub2");
 emitter.emit("event1", "param1", "param2", "param3"); // should print 2 event callback;
-e1sub1.release();
-emitter.emit("event1", "param1", "param2", "param3"); // should print 1 event callback;
-
-
-emitter.emit("event2", "param1", "param2", "param3"); // should print 1 event callback;
-e2sub1.release();
-emitter.emit("event2", "param1", "param2", "param3"); // should not print anything
 
 e1sub2.release();
+console.log("should print event1 with sub1 only");
+emitter.emit("event1", "param1", "param2", "param3"); // should print 1 event callback;
+
+console.log("should print event2 with sub1");
+emitter.emit("event2", "param1", "param2", "param3"); // should print 1 event callback;
+e2sub1.release();
+console.log("should not print event2");
+emitter.emit("event2", "param1", "param2", "param3"); // should not print anything
+
+console.log("should not print anything");
+e1sub1.release();
 emitter.emit("event1", "param1", "param2", "param3"); // should not print anything
 emitter.emit("event2", "param1", "param2", "param3"); // should not print anything
 

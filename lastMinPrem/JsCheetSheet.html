@@ -1,0 +1,73 @@
+<html>
+<style>
+</style>
+<body>
+<script>
+let ret;
+// delete item from array
+console.log("splicing, deleting")
+let arr = [0,1,2,3,4,5];
+ret = arr.splice(2,1);
+console.log(arr);
+console.log(ret); // returns delete items in an array;
+arr = [0,1,2,3,4,5];
+ret = arr.splice(2,2, "2a", "2b");
+console.log(arr);
+console.log(ret);
+
+arr = [0,1,2,3,4,5]
+ret = arr.splice(3, 0, "2.1", "2.2");
+console.log(arr);
+console.log(ret);
+
+arr = [0,1,2,3,4,5];
+console.log(arr);
+ret = arr.splice(2, 2, "replaced 2 with this", "replaced 3 with this", "no replaced just inserted");
+console.log(arr);
+console.log(ret);
+
+//slicing
+console.log("slicing");
+arr = [0,1,2,3,4,5,6,7,8,9]
+let subArray = arr.slice(2,4); // returns sub array from index 2 to index 4
+console.log(arr);
+console.log(subArray);
+
+//indexOf, to search an item
+console.log("indexOf")
+arr = [0,1,2,3,4,5,6,7,8,9,5];
+console.log(arr.indexOf(3)); // 3
+console.log(arr.indexOf(5)); // 5
+console.log(arr.indexOf(5,6)); // 10, find value 5 after index 6th
+
+//shift()
+console.log("shifting, i.e. pop from front");
+arr = [0,1,2,3,4,5,6,7];
+ret = arr.shift();
+console.log(arr);
+console.log(ret);
+
+//unshift();
+console.log("unshift, i.e. push from front and returns the new length");
+arr = [0,1,2,3,4,5,6];
+ret = arr.unshift(-3, -2, -1);
+console.log(arr);
+console.log(ret);
+
+//spread operator
+console.log("spread Op");
+arr = [0,1,2,3,4,5]
+console.log(...arr); // break these in n number of parameters
+function fun(...arg) {
+    console.log(arg); // arg recieved as an array object from a list of parameters
+    console.log(...arg) // breaking down the array into n items
+}
+fun(1,2,3,4); // sent 4 parameters
+fun(...arr); // sent 4 parameters after spread
+// When we see "..." in the code, it is either rest parameters or the spread syntax.
+// When ... is at the end of function parameters, it’s “rest parameters” and gathers the rest of the list of arguments into an array.
+// When ... occurs in a function call or alike, it’s called a “spread syntax” and expands an array into a list.
+
+</script>
+</body>
+</html>;
