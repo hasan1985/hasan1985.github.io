@@ -1,0 +1,68 @@
+<html>
+<style>
+</style>
+<body>
+<script>
+let obj = {};
+obj.a = "val_a";
+obj.b = "val_b";
+
+console.dir(Object.entries(obj)); // returns only own enumerable entries
+/* array of pairs
+{
+    0: (2) ["a", "val_a"]
+    1: (2) ["b", "val_b"]
+    length: 2
+}
+*/
+console.dir(Object.entries(obj)[0][0]); // a
+console.dir(Object.entries(obj)[0][1]); // val_a
+Object.fromEntries([ "a", "val_a"], [ "b", "val_b"] ]) // reverse of Object.entries()
+
+console.log(Object.keys(obj)); // ["a", "b"] // returns only own enumerable keys
+Object.getOwnPropertyNames(obj); // returns own all properties including non-enumerable too
+console.log(Object.values(obj)); // ["val_a", "val_b"], returns only own enumerable properties, not from its prototypes
+
+console.log(Object.getOwnPropertyDescriptor(obj, "a"));
+/*
+{
+    value: "val_a"
+    writable: true
+    enumerable: true
+    configurable: true
+}
+*/
+console.log(Object.getOwnPropertyDescriptors(obj)); // all values and their properties
+Object.defineProperty(obj, "a", {
+    writable: false
+});
+console.log(Object.getOwnPropertyDescriptor(obj, "a"));
+/*
+{
+    value: "val_a"
+    writable: false
+    enumerable: true
+    configurable: true
+}
+*/
+
+
+/*
+how to make an object readonly
+*/
+let readOnlyObj = {
+    pi: 3.12
+};
+Object.defineProperty(readOnlyObj, "pi", {
+    writable: false,
+    configurable: false
+}); // can be done for a non existing properties as well.
+// this is for individual property. we can do it for all properties at once
+Object.preventExtension(readOnlyObj); // Forbids the addition of new properties to the object.
+Object.seal(readOnlyObj); // Forbids adding/removing of properties. Sets configurable: false for all existing properties.
+Object.freeze(readOnlyObj); // Forbids adding/removing/changing of properties. Sets configurable and writable to false for all properties.
+
+
+</script>
+</body>
+</html>

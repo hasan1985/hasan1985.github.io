@@ -1,0 +1,123 @@
+<html>
+<pre>
+We want to desing an async task runner where the input is async tasks and their dependencies.
+Each dependendant is also an async task and will have further dependencies.
+This runner should run all the given async tasks to completion in the appropriate order.
+For example here - E should run first, then A and B can run asynchronously, then C can
+start running, then D can start.
+
+      A-- |
+          | -- C -- D
+E -- B -- |
+
+A task object may look like this but you may modify it as per the need of your desing.
+const taskA = {
+    id: 'A',
+    job: () => {
+        setTimeout(() => {
+            console.log('\n ran task A');
+        }, 100);
+    }, 
+    depedencies: [],
+}
+
+Part1 - Design a datastructure where we can keep the tasks and their dependancies.
+Part2 - Write a function that takes that datastructure and run the tasks in order
+
+</pre>
+
+<style>
+</style>
+
+<body>
+<script>
+class Task { // task datastructure
+	constructor(id, func) {
+		this.id = id; // id: of the task.
+		this.func = func; // function that takes a callback, invokes the callback asynchronously when it is done.
+		this.dependencies = [];
+	}
+
+	runJob() {
+		return new Promise((resolve) => { // promisify the given function
+			this.func(resolve);
+		});
+	}
+
+	addDependency(task) {
+		this.dependencies.push(task); // dependent task to add
+	}
+}
+
+// defining the tasks
+const A = new Task("A", function(callback) {
+	setTimeout(() => {
+        console.log('ran task A', (new Date()).getTime());
+        callback();
+    }, 100);
+});
+
+const B = new Task("B", function(callback) {
+	setTimeout(() => {
+        console.log('ran task B', (new Date()).getTime());
+        callback();
+    }, 100);
+});
+
+const C = new Task("C", function(callback) {
+	setTimeout(() => {
+        console.log('ran task C', (new Date()).getTime());
+        callback();
+    }, 100);
+});
+
+const D = new Task("D", function(callback) {
+	setTimeout(() => {
+        console.log('ran task D', (new Date()).getTime());
+        callback();
+    }, 100);
+});
+
+const E = new Task("E", function(callback) {
+	setTimeout(() => {
+        console.log('ran task E', (new Date()).getTime());
+        callback();
+    }, 100);
+});
+
+/*
+adding the dependencies
+  	 A -- |
+     	  | -- C -- D
+E -- B -- |
+*/
+B.addDependency(E);
+C.addDependency(B);
+C.addDependency(A);
+D.addDependency(C);
+
+asynRunner(D); // call with the root task.
+
+function asynRunner(task) {
+	if (task.dependencies.length === 0) {
+		return task.runJob();
+	} else {
+		let dependentPromises = [];
+		for (let dependendantTasks of task.dependencies) {
+			// recursively calling the dependant tasks and gathering the promise
+			dependentPromises.push(asynRunner(dependendantTasks));
+		}
+		return new Promise((resolve) => {
+			Promise.all(dependentPromises).then(() => {
+				return task.runJob();
+			}).then(() => {
+				resolve();
+			})
+		});
+	}
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<html>
+<style>
+</style>
+<body>
+<script>
+/*
+regx = /pattern/flag
+regexp = new RegExp("pattern", "flags");
+regexp = new RegExp(/pattern/flags);
+flags:  i: case insensitive,        g: globle, all matches
+        y: sticky,                  m: multiline mode
+        s: done mode                u: unicode support
+*/
+
+/*
+Anchors: string start ^ and end $
+*/
+//replace all preceding zeros
+console.log("000345300".replace(/^0*/, ""));
+console.log("000345300".replace(/^0+/, ""));
+console.log("000345300".replace(/^0{1,}/, ""));
+
+// replace all end zeros
+console.log("000345300".replace(/0*$/, ""));
+console.log("000345300".replace(/0+$/, ""));
+console.log("000345300".replace(/0{1,}$/, ""));
+
+/*
+Quantifiers +, *, ? and {n}
+{1,} 1 or more
+{,10} 10 or less
+{2,9} 2 to 9
++ 1 or more same as {1,}
+? 1 or 0, === {1,0}
+* 0 or more
+*/
+
+
+//replace all a and e using sets []
+console.log("qrrraerreetgfa".replace(/[ae]/g, "-"));    // qrrr--rr--tgf-
+
+//replace with range
+console.log("qweertabcwerabc".replace(/[a-c]/g, "-")); // qweert---wer---
+
+//get hour and min from string
+console.log("12:32".match(/\d\d/g)); // [12, 32]
+
+//search a website domain
+console.log("the url is asd-sd.sd.com, so capture it".match(/([\w-]+\.)+\w+/g)); // ["asd-sd.sd.com"]
+
+// get email addresses from a string
+console.log("my email adds are blah-blah.blah@blah.com and abc@efg.com so what is my email?".match(/[.-\w]+@[-\w]+.[-\w]+/g));
+
+/*
+string.replace(regx,replacement);
+*/
+let str = "I love HTML very much";
+console.log(str.replace(/HTML/, "Javascript"));     // I love javascript
+console.log(str.replace(/HTML/, "$& Javascript"));  // I love HTML javascript ($& means insert the matched part)
+console.log(str.replace(/HTML/, "Javascript $&"));  // I love javascript HTML very much
+console.log(str.replace(/HTML/, "$` Javascript"));  // I love I love javascript very much ($` -> precending of matched) 
+console.log(str.replace(/HTML/, "$' Javascript"));  // I love very much Javascript very much ($' -> following of matched)
+
+let ph = "=210----418--9302";
+console.log(ph.match(/\d/g));
+console.log(ph.replace(/\d/g, "*"));
+
+</script>
+</body>
+</html>

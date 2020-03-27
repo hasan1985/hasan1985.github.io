@@ -8,21 +8,28 @@ https://arthur-zheng.gitbooks.io/front-end-interview-questions/dom-api.html
 https://www.hackerrank.com/domains/tutorials/10-days-of-javascript
 
 show servay question based on user picked ans
-show email folder structure from flat list
+show email folder structure from flat list, show hide/collapse folder
 
 find out some promise related question
 promisify a function - https://javascript.info/promisify
 
 
 ToDo - 
-implement operator overloading for a JS customer object
+implement operator overloading for a JS custom object
 implement iterator for a custom object
 Read the pollyfil section
 Read the promise section
 Finish workday question
+Mask a phone number string using string regx
 Design a stop watch UI with JS asynchronous functions
+Finish atlassian object flattening question
+Do amplitude question from Edris
+Do dropbox question from Edris
+Review coinBase tripleByte questions
+Draw two squares and a circle at the center
+sum(1)(2)(3)(4)..(n) => 1+2+3+...+n
 
-Finish atlassian object flattening question 
+
 
 
 Some UI todo - 

@@ -1,0 +1,133 @@
+/*
+
+
+Suppose we have some input data describing a graph of relationships between parents and children over multiple generations. The data is formatted as a list of (parent, child) pairs, where each individual is assigned a unique integer identifier.
+
+For example, in this diagram, 6 and 8 have common ancestors of 4 and 14.
+
+         14  13
+         |   |
+1   2    4   12
+ \ /   / | \ /
+  3   5  8  9
+   \ / \     \
+    6   7     11
+
+parentChildPairs1 = [
+    (1, 3), (2, 3), (3, 6), (5, 6), (5, 7), (4, 5),
+    (4, 8), (4, 9), (9, 11), (14, 4), (13, 12), (12, 9)
+]
+
+Write a function that takes the graph, as well as two of the individuals in our dataset, as its inputs and returns true if and only if they share at least one ancestor.
+
+Sample input and output:
+
+hasCommonAncestor(parentChildPairs1, 3, 8) => false
+hasCommonAncestor(parentChildPairs1, 5, 8) => true
+hasCommonAncestor(parentChildPairs1, 6, 8) => true
+hasCommonAncestor(parentChildPairs1, 6, 9) => true
+hasCommonAncestor(parentChildPairs1, 1, 3) => false
+hasCommonAncestor(parentChildPairs1, 3, 1) => false
+hasCommonAncestor(parentChildPairs1, 7, 11) => true
+hasCommonAncestor(parentChildPairs1, 6, 5) => true
+hasCommonAncestor(parentChildPairs1, 5, 6) => true
+
+Additional example: In this diagram, 4 and 12 have a common ancestor of 11.
+
+        11
+       /  \
+      10   12
+     /  \
+1   2    5
+ \ /    / \
+  3    6   7
+   \        \
+    4        8
+
+parentChildPairs2 = [
+    (11, 10), (11, 12), (2, 3), (10, 2), (10, 5),
+    (1, 3), (3, 4), (5, 6), (5, 7), (7, 8),
+]
+
+hasCommonAncestor(parentChildPairs2, 4, 12) => true
+hasCommonAncestor(parentChildPairs2, 1, 6) => false
+hasCommonAncestor(parentChildPairs2, 1, 12) => false
+
+n: number of pairs in the input
+
+
+*/
+
+
+
+"use strict";
+let parentChildPairs1 = [
+    [1, 3], [2, 3], [3, 6], [5, 6], [5, 7], [4, 5],
+    [4, 8], [4, 9], [9, 11], [14, 4], [13, 12], [12, 9]
+];
+
+let parentChildPairs2 = [
+    [11, 10], [11, 12], [2, 3], [10, 2], [10, 5],
+    [1, 3], [3, 4], [5, 6], [5, 7], [7, 8]
+];
+
+
+// console.log(inDegCount(parentChildPairs));
+
+function inDegCount(edges) {
+  let inDeg = {}; // O(n) 
+
+  for (let e of edges) { // O(n)
+    if (inDeg[e[0]] === undefined) inDeg[e[0]] = 0;
+    if (inDeg[e[1]] === undefined) inDeg[e[1]] = 0;
+    inDeg[e[1]]++;
+  }
+  
+  let inDeg0 = [];
+  let inDeg1 = [];
+  for (let [e,v] of Object.entries(inDeg)) { // O(n)
+    if (v === 0) inDeg0.push(e);
+    if (v === 1) inDeg1.push(e);
+  }
+  return [inDeg0, inDeg1];
+}
+
+console.log(commonAns(parentChildPairs1, 5, 6));
+
+function commonAns(edges, n1, n2) {
+  let set = new Set();
+  let adjList = {};
+  
+  for (let e of edges) {
+    if (adjList[e[1]] === undefined) adjList[e[1]] = [];
+    adjList[e[1]].push(e[0]);
+  }
+  
+  console.log(adjList);
+  
+  dfs(n1);
+  function dfs(n) {
+    //console.log(n, adjList[n]);
+    if (adjList[n] === undefined) return;
+    for (let i = 0; i < adjList[n].length; i++) {
+      let adj = adjList[n][i];
+      set.add(adj);
+      dfs(adj);
+    }
+  }
+  
+  let comAns;
+  
+  dfs2(n2);
+  function dfs2(n) {
+    if (adjList[n] === undefined) return;
+    for (let adj of adjList[n]) {
+      if (set.has(adj)) {
+        comAns = adj;
+        return;
+      }
+    }
+  }
+  
+  return comAns === undefined ? false : true;
+}

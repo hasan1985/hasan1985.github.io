@@ -1,0 +1,21 @@
+ImpTipsToRem
+
+1.	regular object keys are always string.
+	If you use a number or anyother data type
+	it will convert to string to be used as a key.
+	x = {}
+	y = {}
+	t = {}
+	t[x] = "x"
+	t[y] = "y"
+	console.log(t[x]) // will not throw any error, will simply print y. think why?
+
+	Where Map can have Object-ref as key.
+	map = new Map()
+	map.set(x, "x")
+	map.set(y, "x") // here x,y are the objects created before
+	console.log(map.get(x)) // prints "x"
+	console.log(map.get(y))	// prints "y"
+
+	WeekMap removes an entry if it's key is an object and that object is no longer referenced, hence the object is garbage collected;
+	where regular Map doesn't do that hence the garbage collector doesn't release (doesn't do gb-collection) the object memory.
