@@ -1,0 +1,47 @@
+//Critical Routers
+
+
+function criticalRouters(edges) {
+    let adjList = {};
+    let anyNode;
+    for (let e of edges) {
+        if (adjList[e[0]] === undefined) adjList[e[0]] = [];
+        if (adjList[e[1]] === undefined) adjList[e[1]] = [];
+        adjList[e[1]].push(e[0]);
+        adjList[e[0]].push(e[1]);
+        anyNode = e[0];
+    }
+    
+    let cutVar = new Set();
+    let visited = {};
+    let time = {};
+    let low = {};
+    let timer = 0;
+    
+    (function dfs(node, par = -1) {
+        visited[node] = true;
+        time[node] = low[node] = timer++;
+        let child = 0;
+        for (let adj of adjList[node]) {
+            if (adj === par) continue;
+            if (!visited[adj]) {
+                dfs(adj, node);
+                child++;
+                if (par != -1 && low[adj] >= time[node]) cutVar.add(node);
+            }
+            low[node] = Math.min(low[node], low[adj]);
+        }
+        
+        if (par === -1 && child > 1) cutVar.add(node);
+    })(anyNode);
+    
+    return Array.from(cutVar);
+}
+
+(function main() {
+    let numNodes = 7;
+    let numEdges = 7;
+    let edges = [[0, 1], [0, 2], [1, 3], [2, 3], [2, 5], [5, 6], [3, 4]];
+    
+    console.log(criticalRouters(edges));
+}());

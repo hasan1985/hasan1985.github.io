@@ -1,0 +1,54 @@
+// SubstringsWithExactly_K_DistinctChars
+https://leetcode.com/playground/47DTBmLV
+function atMostK(A, K) {
+    if (K <= 0) return 0;
+    
+    let charCount = {};
+    let subStringCount = 0;
+    let windowStart = 0;
+    for (let windowEnd = windowStart; windowEnd < A.length; windowEnd++) {
+        const rightChar = A[windowEnd];
+        charCount[rightChar] = rightChar in charCount ? charCount[rightChar] + 1 : 1;
+        if (charCount[rightChar] === 1) {
+            K--;
+        }
+        
+        while (K < 0) {
+            const leftChar = A[windowStart];
+            charCount[leftChar] -= 1;
+            if (charCount[leftChar] === 0) {
+                K++;
+            }
+            windowStart++;
+        }
+        subStringCount += windowEnd - windowStart + 1;
+    }
+
+    return subStringCount;
+}
+
+(function main() {
+    let A = "aabab";
+    let N = 3;  
+    console.log(atMostK(A,N) - atMostK(A,N-1));
+}());
+
+
+/// Time limit exit
+var subarraysWithKDistinct = function(A, K) {
+    let count = 0;
+    let used = new Set();
+    for (let i = 0; i < A.length; i++) {
+        used.clear();
+        used.add(A[i]);
+        if (used.size === K) count++;
+        for (let j = i + 1; j < A.length; j++) {
+            // console.log(used, used.size);
+            used.add(A[j]);
+            if (used.size === K) count++;
+            if (used.length > K) 
+                break;
+        }
+    }
+    return count;
+};

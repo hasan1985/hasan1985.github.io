@@ -1,0 +1,55 @@
+fevGenre
+
+function solution(songPerUser, songPerGenre) {
+    let songToGenreMap = {};
+    let usersInfo = {};
+    
+    for (let genre of Object.keys(songPerGenre)) {
+        for (let song of songPerGenre[genre]) {
+            songToGenreMap[song] = genre;
+        }
+    }
+    
+    for (let user of Object.keys(songPerUser)) {
+        let fav = [];
+        let maxRank = -1;
+        let genraRank = {};
+        for (let song of songPerUser[user]) {
+            let genre = songToGenreMap[song];
+            if (genre) {
+                genraRank[genre] = genraRank[genre] === undefined ? 1 : genraRank[genre]+1;
+                maxRank = Math.max(genraRank[genre], maxRank);
+            }
+        }
+        for (let genre of Object.keys(genraRank)) {
+            if (genraRank[genre] === maxRank)
+                fav.push(genre);
+        }
+        usersInfo[user] = fav;
+    }
+    
+    return usersInfo;
+    
+}
+
+(function main() {
+    userSongs = {  
+       "David": ["song1", "song2", "song3", "song4", "song8"],
+       "Emma":  ["song5", "song6", "song7"]
+    };
+    songGenres = {  
+       "Rock":    ["song1", "song3"],
+       "Dubstep": ["song7"],
+       "Techno":  ["song2", "song4"],
+       "Pop":     ["song5", "song6"],
+       "Jazz":    ["song8", "song9"]
+    };
+    console.log(solution(userSongs, songGenres));
+    
+    userSongs = {  
+       "David": ["song1", "song2"],
+       "Emma":  ["song3", "song4"]
+    };
+    songGenres = {}; 
+    console.log(solution(userSongs, songGenres));
+}());

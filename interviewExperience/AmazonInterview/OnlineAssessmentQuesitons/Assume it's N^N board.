@@ -1,0 +1,88 @@
+// Assume it's N^N board.
+// 2 is start and end point, 1 is the road, and 0 is the wall. We can move to up, down, left, and right if the next node is 1.
+// Find the shortest path that can go from start to end:
+// public Path findPath(int[][] board, int[] start, int[] end) {
+// }
+// int[][] board = {
+//           {0,2,0,0,0,0}, 
+//           {0,1,1,0,0,0}, 
+//           {1,1,1,1,1,0}, 
+//           {1,0,0,0,1,0}, 
+//           {1,1,1,1,1,0}, 
+//           {0,0,2,0,0,0}};
+//         int[] start = {0,1}; {5, 2}
+//         int[] end = {5,2}; {0, 1}
+
+
+console.log(shortestPath(
+  [[0,2,0,0,0,0], 
+   [0,1,1,0,0,0], 
+   [1,1,1,1,1,0], 
+   [1,0,0,0,1,0], 
+   [1,1,1,1,1,0], 
+   [0,0,2,0,0,0]],
+  [0,1], [5,2]))
+
+// Output: [[0,1],[1, 1],[2, 1], [2,0],..., [5,2]]
+
+
+function shortestPath(board, s, d) {
+  let curr = [s];
+  let next = [];
+  let dis = 1;
+  let nr = board.length;
+  let nc = board[0] ? board[0].length : 0;
+  let par = new Array(nr).fill().map(() => new Array(nc));
+  let desFound;
+  board[s[0]][s[1]] = 0;
+  
+  while (curr.length > 0) {
+    for (let state of curr) {
+      let r = state[0];
+      let c = state[1];
+      
+      console.log(r,c);
+      
+    
+      insertChild(r,c,r+1,c);
+      insertChild(r,c,r-1,c);
+      insertChild(r,c,r,c+1);
+      insertChild(r,c,r,c-1);
+      
+      function insertChild(pr, pc, r,c) {
+        if (r >= 0 && r < nr && c >= 0 && c < nc) {
+    
+          if ( board[r][c] === 1) {
+            board[r][c] = 0;
+            next.push([r,c]);
+            par[r][c] = [pr,pc];
+          } else if ( board[r][c] === 2) {
+            par[r][c] = [pr,pc];
+            desFound = true;
+            return;
+          }
+        }
+      }
+      if (desFound) break;
+    }
+    
+    if (desFound) break;
+    curr = next;
+    next = [];
+    dis++;
+  }
+  
+  console.log(par);
+  
+  let path = [];
+  getPath(d[0],d[1]);
+  function getPath(r,c) {
+    console.log(r,c, par[r][c]);
+    if (par[r] && par[r][c] === undefined) return;
+    path.push([r,c]);
+    
+    getPath(par[r][c][0], par[r][c][1]);
+  }
+  
+  return path.reverse();
+}

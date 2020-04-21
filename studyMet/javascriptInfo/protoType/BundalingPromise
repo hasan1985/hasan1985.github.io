@@ -1,0 +1,117 @@
+// getBatch(index)
+ 
+// The function makes a request call to the backend to fetch the data.
+// It returns a promise which can be resolved to the same JSON structure as Part 1.
+
+// Mock implementation
+
+const getBatch = (index) => {
+    return new Promise((resolve, reject) => {
+        if (index === 1) {
+            resolve([
+                {
+                    value: 'value0',
+                    children: []
+                }
+            ]);
+        } else if (index === 2) {
+            resolve([
+                {
+                    value: 'value1',
+                    children: [
+                        {
+                            value: 'value2',
+                            children: [
+                                {
+                                    value: 'value3',
+                                    children: []   
+                                }
+                            ]
+                        },
+                        {
+                            value: 'value4',
+                            children: []
+                        }
+                    ]
+                },
+                {
+                    value: 'value5',
+                    children: [],
+                }
+            ]);
+        } else if (index === 3) {
+            // resolve([
+            //     {
+            //         value: 'value6',
+            //         children: []
+            //     }
+            // ]);
+            reject("error")
+        } else if (index === 4) {
+            resolve([
+                {
+                    value: 'value6',
+                    children: []
+                }
+            ]);
+        }
+    });
+};
+
+// Task: Implement getValueList(fromIndex, toIndex) such that it combines successive calls
+// to getBatch(index) to produce a Promise containing the result shown below:
+
+const flatten = (input) => {
+    let ret = [];
+    for (let it of input) {
+        rec(it);
+    }
+    function rec(obj) {
+        if (obj !== undefined) {
+            ret.push({
+                value: obj.value
+            });
+            for (let ch of obj.children) {
+                rec(ch);
+            }
+        }
+    }
+    return ret;
+};
+
+const getValueList = (fromIndex, toIndex) => {
+    let pro = [];
+    for (let i = fromIndex; i <= toIndex; i++) {
+        pro.push(new Promise((resolve) => {
+            getBatch(i).then((d) => {
+                resolve(d);
+            }).catch((e) => {
+                resolve([]);
+            })
+        }))
+    }
+    
+    let res = [];
+    return new Promise((resolve, reject) => {
+        Promise.all(pro).then((data) => {
+            for (let d of data) {
+                res = res.concat(flatten(d));
+            }
+            resolve(res);
+        });
+    });
+};
+
+expected = [
+    { value: 'value0' },
+    { value: 'value1' },
+    { value: 'value2' },
+    { value: 'value3' },
+    { value: 'value4' },
+    { value: 'value5' },
+    { value: 'value6' }
+];
+
+getValueList(1, 4).then(result => {
+    console.log("result should match expected: ", JSON.stringify(result) === JSON.stringify(expected))
+});

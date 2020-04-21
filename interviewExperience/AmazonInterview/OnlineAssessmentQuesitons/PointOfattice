@@ -1,0 +1,34 @@
+//PointOfattice
+//https://leetcode.com/playground/UQLxtfB6
+
+function solution(ax, ay, bx, by) {
+    //slop of line ab = deltaY/deltaX
+    let deltaY = by - ay;
+    let deltaX = bx - ax;
+    
+    let gcdOfDelta_X_Y = gcd(Math.abs(deltaY),Math.abs(deltaX)) ;
+    let reducedDeltaY = deltaY/gcdOfDelta_X_Y;
+    let reducedDeltaX = deltaX/gcdOfDelta_X_Y;
+    
+    /*
+    if there were no turn then the next point P would have been 
+    Px = bx + reducedDeltaX
+    Py = by + reducedDeltaY
+    
+    but since there is a clockwise 90Deg turn so we have to transpose the deltas
+    explaination - https://www.math-only-math.com/90-degree-clockwise-rotation.html
+    hence for actual resultant point R 
+    Rx = bx + reducedDeltaY
+    Ry = by + (-reducedDeltaX)
+    */
+    
+    return [bx + reducedDeltaY, by - reducedDeltaX];
+    
+    function gcd(a,b) {
+        return b === 0 ? a : gcd(b, a % b);
+    }
+}
+
+(function main() {
+    console.log(solution(-1,3,3,1));
+}());

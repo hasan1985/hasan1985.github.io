@@ -1,0 +1,84 @@
+ProbList
+Top K Frequently Mentioned Keywords ⭐⭐⭐ [Experienced]
+	- copied
+Zombie in Matrix (Min hours to send file to all available servers) ⭐⭐⭐ [Experienced]
+	- similar 
+Critical Routers ⭐⭐ [New Grad | Experienced]
+	- https://leetcode.com/playground/Xo8yws8P	-------------------------done (3)
+Product Suggestions ⭐⭐ [New Grad | Experienced]
+	- https://leetcode.com/problems/search-suggestions-system/ ----------done (1)
+Number of Clusters ⭐⭐ [Experienced]
+	- https://leetcode.com/problems/number-of-islands/ ------------------done (1)
+Reorder Data in Log Files [Experienced]
+	- https://leetcode.com/problems/reorder-data-in-log-files/. ---------done (2)
+Optimal Utilization [Experienced]
+	- https://leetcode.com/discuss/interview-question/373202 (3) ---------copied
+Min Cost to Connect Ropes / Min Time to Merge Files [Experienced]
+	- https://leetcode.com/submissions/detail/301005321/ (3) ------------done
+Treasure Island / Min Distance to Remove the Obstacle (BFS) [Experienced] (single source)
+	- same as - https://leetcode.com/problems/walls-and-gates/ (2)------ accepted similar 
+Treasure Island II (multiple source)
+	- same as - https://leetcode.com/problems/walls-and-gates/ (2) ------accepted similar 
+Find Pair With Given Sum ⭐⭐ [Experienced, Intern]
+	- max sum with range - ----------------------------------------------not done (3)
+Copy List with Random Pointer ⭐⭐ [New Grad]
+	- https://leetcode.com/problems/copy-list-with-random-pointer/ ------done 2
+Merge Two Sorted Lists ⭐⭐ [New Grad | Intern]
+	- https://leetcode.com/problems/merge-two-sorted-lists/ -------------not done 1
+Subtree of Another Tree ⭐⭐ [New Grad]
+	- https://leetcode.com/problems/subtree-of-another-tree/ ------------done 2
+Search a 2D Matrix II ⭐⭐ [New Grad]
+	- https://leetcode.com/problems/search-a-2d-matrix-ii/ --------------done 2
+Critical Connections ⭐ [New Grad]
+	- same as - https://leetcode.com/problems/critical-connections-in-a-network/ done 3
+Favorite Genres ⭐⭐ [New Grad]
+	- https://leetcode.com/discuss/interview-question/373006 ------------done) 3
+	- https://leetcode.com/playground/us9KfsFK
+Two Sum - Unique Pairs ⭐⭐ [New Grad]
+	 - https://leetcode.com/problems/two-sum/	-------------------------not done 2
+	 - https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/ --not done 2
+Spiral Matrix ⭐ [New Grad]
+	- https://leetcode.com/problems/spiral-matrix-ii/ --------------------done 3
+Count substrings with exactly K distinct chars ⭐ [Intern]
+	- https://leetcode.com/discuss/interview-question/370157. ------------done 5
+	- https://leetcode.com/playground/47DTBmLV
+	- https://leetcode.com/problems/subarrays-with-k-different-integers/ -similar
+Substrings of size K with K distinct chars ⭐⭐ [Intern]
+	- https://leetcode.com/discuss/interview-question/370112 ------------copied 2
+	- https://leetcode.com/playground/d77acbwM
+Max Of Min Altitudes ⭐⭐ [Intern]
+	- https://leetcode.com/discuss/interview-question/383669/ ----------not done, easy dp (2) 
+Longest Palindromic Substring ⭐⭐ [Intern]
+	- https://leetcode.com/problems/longest-palindromic-substring/ -----done 2
+Most Common Word ⭐⭐ [Intern]
+	- https://leetcode.com/problems/most-common-word/ ------------------done (2)
+K Closest Points to Origin ⭐ [Intern]
+	- https://leetcode.com/problems/k-closest-points-to-origin/. -------done (1)
+Generate Parentheses ⭐ [Intern]
+	- https://leetcode.com/problems/generate-parentheses/ --------------done (3)
+Min Cost to Connect All Nodes (a.k.a. Min Cost to Add New Roads)
+	- https://leetcode.com/problems/connecting-cities-with-minimum-cost/ done (2)
+Min Cost to Repair Edges (MST)
+	- https://leetcode.com/problems/connecting-cities-with-minimum-cost/ done (2)
+Prison Cells After N Days
+	- https://leetcode.com/problems/prison-cells-after-n-days/ ----------not done (3)
+Partition Labels
+	- https://leetcode.com/problems/partition-labels/ -------------------done (3)
+Subtree with Maximum Average
+	- done - https://leetcode.com/problems/maximum-average-subtree/ -----done (2)
+Load Balancer [Experienced]
+	- https://leetcode.com/discuss/interview-question/506287/ copied (2)
+Battleship
+	- https://leetcode.com/discuss/interview-question/538068/ not looked
+Point of Lattice ⭐ [Experienced]
+	- https://leetcode.com/discuss/interview-question/396418/ ----------done (3)
+	- https://leetcode.com/playground/UQLxtfB6
+Merge Intervals ⭐
+	- https://leetcode.com/problems/merge-intervals/--------------------done (2)
+Longest string without 3 consecutive characters
+	- https://leetcode.com/discuss/interview-question/330356 -----------done (3)
+	- https://leetcode.com/playground/6uHEfPqT
+Longest string made up of only vowels
+	https://leetcode.com/discuss/interview-question/233724 -------------not done (2) ll do in test
+https://leetcode.com/problems/number-of-dice-rolls-with-target-sum/ ----done (3)
+Nth GP [Intern] --------------------------------------------------------not done (2) ll do in test

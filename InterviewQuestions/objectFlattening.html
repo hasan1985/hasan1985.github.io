@@ -1,0 +1,42 @@
+<html>
+<style>
+</style>
+<body>
+<script>
+
+const obj = {
+	a1: {
+	 	b1: {
+	 		c1: {
+	 			d1: 100
+	 		}
+	 	},
+	 	b2: {
+	 		c2 : 200
+	 	},
+	 	b3: 300
+	},
+	a2: 300,
+	a3: [1,2,3]
+}
+
+
+
+const flattened = {};
+flatten(obj,  "");
+function flatten(node, path) {
+	if (typeof node === "object" && !Array.isArray(node)) {
+		for (let key of Object.keys(node)) {
+			flatten(node[key], path+key);
+		}	
+	} else {
+		flattened[path] = node;
+	}
+	
+}
+
+console.log(flattened);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+//LongestStringWithout3Consecutive
+// https://leetcode.com/playground/6uHEfPqT
+function solution(a, b, c) {
+    let chr = [];
+    let freq = [["a",a], ["b",b], ["c",c]];
+    while(true) {
+        freq.sort((a,b) => b[1] - a[1]); //sort to get the max or 2nd max
+        if (freq[0][1] === 0) break;
+        
+        let last = chr.length-1;
+        if (freq[0][0] !== chr[last] || freq[0][0] !== chr[last-1]) {
+            chr.push(freq[0][0]);
+            freq[0][1]--;
+        } else {
+            if (freq[1][1] === 0) break;
+            chr.push(freq[1][0]);
+            freq[1][1]--;
+        }
+    }
+    return chr.join("");
+}
+
+(function main() {
+    console.log(solution(3,3,3).length);
+}());
