@@ -1,0 +1,16 @@
+Angular Notes
+
+Angular app starts with index.html and main.ts
+
+Important questions
+how ng serve works
+what are the initial bundles server sends to browser when page loads for the first time
+how router works
+
+
+
+how start angular hello world app - 
+go to hello world folder
+run 'ng serve'
+open browser with localhost:4200
+to understand open hello world project in VS code and open main.ts and index.html

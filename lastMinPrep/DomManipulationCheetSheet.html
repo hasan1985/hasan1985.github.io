@@ -1,0 +1,84 @@
+<html>
+
+<style>
+</style>
+
+<a href = "https://javascript.info/document">Dom walking</a>
+</br> </br> </br>
+<ol>
+
+<li>
+<pre>
+<a href="https://javascript.info/dom-navigation#dom-collections">all nodes (including text and comments) -</a>
+parentNode, 		childNodes
+firstChild, 		lastChild,
+previousSibling, 	nextSibling
+
+childNodes looks like an array. But actually it’s not, rather a collection – a special array-like iterable object.
+We can use "for..of" to iterate over it. Array methods won’t work. But we can convert it to array - 
+Array.from(document.body.childNodes)
+</pre>
+</li>
+
+<li><pre>
+<a href="">only elements nodes (i.e. no text or comments)</a>
+parentElement,			children,
+firstElementChild,		lastElementChild,
+previousElementSibling,		nextElementSibling
+</pre></li>
+
+
+<li><pre>
+<a href="https://javascript.info/dom-navigation#dom-navigation-tables">table node's additional properties</a>
+table.rows
+tr.cells
+tr.rowIndex
+td.cellIndex
+</pre></li>
+
+<li><pre>
+<a href="">Searching: getElement*, querySelector*</a>
+document.getElementById()        [Only document.getElementById, not anyElem.getElementById]
+elem.querySelectorAll(css Selector)
+elem.querySelector(css Selector) [returns the first element for the given CSS selector. the same as elem.querySelectorAll(css)[0] ]
+elem.closest(css)                [looks the nearest ancestor that matches the CSS-selector. The elem itself is also included in the search.]
+elemA.contains(elemB)
+elem.getElementsByClassName()	 [don't forgot 's' in Elements. elem === document as well]
+elem.getElementsByTagName()
+All methods "getElementsBy*" return a live collection. Such collections always reflect the current state of the document and 
+“auto-update” when it changes. In contrast, querySelectorAll returns a static collection. It’s like a fixed array of elements.
+</pre></li>
+
+<li><pre>
+<a href="https://javascript.info/basic-dom-node-properties">Node properties: type, tag and contents</a>
+<a href="https://javascript.info/basic-dom-node-properties#dom-node-classes">Remember this Hirarchy</a>
+elem.nodeName -> returns the type of node ex - #commnet, #text, #document, DIV, SCRIPT etc.
+elem.data -> returns text if it is a text node or comment string if it is a comment node.
+elem.innerHTML -> all html text, elem.innerHTML += "new html" ll do full overwrite as string is immutable, valid only for element node
+elem.outerHTML -> it is like innerHTML + element itself. valid only for element node
+elem.textcontent -> only for text node, returns inner texts only.
+elem.value -> value for input, select or textArea nodes
+elem.href -> for link nodes
+elem.id -> any elem with id
+elem.hidden -> a boolean to hide an element
+</pre></li>
+
+<li><pre>
+</pre></li>
+
+<li><pre>
+</pre></li>
+
+
+</ol>
+
+<div id="divId"> </div>
+<body>
+
+
+<script>
+
+</script>
+
+</body>
+</html>
