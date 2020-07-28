@@ -1,0 +1,128 @@
+<html>
+build a button dropdown with on click<br><br><br>
+
+<!-- solution 1
+<div class="dropdownElement"> 
+    <div>button1</div>
+    <div class="dropdownMenu">
+        <div>MenuItem1</div>
+        <div>MenuItem2</div>
+    </div>
+</div>
+
+<div class="dropdownElement"> 
+    <div>button2</div>
+    <div class="dropdownMenu">
+        <div>MenuItem3</div>
+        <div>MenuItem4</div>
+    </div>
+</div>
+
+<div class="dropdownElement"> 
+    <div>button1</div>
+    <div class="dropdownMenu">
+        <div>MenuItem1</div>
+        <div>MenuItem2</div>
+    </div>
+</div>
+ -->
+
+<!-- solution 2 -->
+<div id="dde1" class="dropdownElement"></div>
+<div id="dde2" class="dropdownElement"></div>
+<div id="dde3" class="dropdownElement"></div>
+
+<style>
+
+
+
+/* solution 1 and 2 */
+.dropdownElement {
+	position: relative;
+	display: inline-block;
+}
+
+.dropdownMenu {
+	display: none;
+	position: absolute;
+
+	background: white;
+	border: 1px solid black;
+	z-index: 100;
+}
+
+</style>
+
+<body>
+
+<script>
+
+/*
+soultion - 1
+capture all document click, then if inside button then open else clear all dropdowns.
+*/
+// document.onclick = (event) => {
+// 	// clear all first
+// 	document.querySelectorAll(".dropdownMenu").forEach(e => e.style.display = "none");
+// 	// then see if it is inside dropdownElement or not.
+// 	let dropdownElement = event.target.closest(".dropdownElement");
+// 	dropdownElement && (dropdownElement.querySelector(".dropdownMenu").style.display = "inline-block");
+// }
+
+
+//solution - 2
+Node.prototype.appendNewEle = function(tag = "div") {
+	let newEle = document.createElement(tag);
+	this.append(newEle);
+	return newEle;
+}
+
+Node.prototype.appendTextNode = function(text) {
+	this.append(document.createTextNode(text));
+	return this;
+}
+
+Document.prototype.clearAll = function (selector) {
+	document.querySelectorAll(selector).forEach(e => e.style.display = "none");
+}
+
+	
+function buildDropdownMenu(ele, buttonName, menuList, callback) {
+	const dropdownClass = "dropdownElement";
+    const dropdownMenuClass = "dropdownMenu";
+
+	let button = ele.appendNewEle().appendTextNode(buttonName);	
+	let menuListEle = ele.appendNewEle();
+	menuListEle.style.display = "none";
+	menuListEle.classList.add(dropdownMenuClass);
+
+	button.onclick = (event) => {
+		clearAllDropdown();
+		menuListEle.style.display = "inline-block";
+		event.stopPropagation();
+	}
+	for (let index in menuList) {
+		menuListEle.appendNewEle().appendTextNode(menuList[index]).onclick = () => callback(menuList[index], index);
+	}
+
+	function clearAllDropdown() {
+		document.querySelectorAll("."+dropdownMenuClass).forEach(e => e.style.display = "none");
+	}
+	document.addEventListener("click", clearAllDropdown);
+}
+
+buildDropdownMenu(document.querySelector("#dde1"), "customBtn1", ["m11", "m12"], (menuItemIdex) => {
+	console.log(menuItemIdex);
+})
+
+buildDropdownMenu(document.querySelector("#dde2"), "customBtn2", ["m21", "m22"], (menuItemIdex) => {
+	console.log(menuItemIdex);
+})
+
+buildDropdownMenu(document.querySelector("#dde3"), "customBtn3", ["m31", "m32"], (menuItemIdex) => {
+	console.log(menuItemIdex);
+})
+</script>
+
+</body>
+</html>
