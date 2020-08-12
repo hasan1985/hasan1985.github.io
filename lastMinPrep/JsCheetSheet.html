@@ -68,6 +68,18 @@ fun(...arr); // sent 4 parameters after spread
 // When ... is at the end of function parameters, it’s “rest parameters” and gathers the rest of the list of arguments into an array.
 // When ... occurs in a function call or alike, it’s called a “spread syntax” and expands an array into a list.
 
+//array destructuring
+// https://www.educative.io/edpresso/array-destructuring-simplified
+let [ a, b, c ] = [1,2,3,4];
+a=1, b=2, c=3;
+let [ a, b, ...c ] = [1,2,3,4];
+a=1, b=2, c=[3,4];
+
+//swap
+let x = 1;
+let y = 2;
+[x,y] = [y,x]
+
 //Object
 console.log("Object functions")
 let obj = {
