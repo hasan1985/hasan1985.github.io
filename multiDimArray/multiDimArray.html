@@ -1,0 +1,21 @@
+<script>
+// 2d
+let numOfRow = 3;
+let numOfCol = 4;
+let array2d = Array(numOfRow).fill().map(() => Array(numOfCol).fill(1));
+
+console.log(array2d);
+array2d[1][1] = 100;
+console.log(array2d);
+
+
+let numOfDep = 5;
+let array3d = Array(numOfRow).fill().map(() =>
+				Array(numOfCol).fill().map(() => Array(numOfDep).fill(5)));
+console.log(array3d);
+array3d[1][1][1] = 100;
+console.log(array3d);
+
+
+
+</script>

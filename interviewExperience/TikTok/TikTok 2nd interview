@@ -1,3 +1,5 @@
 TikTok 2nd interview
 
-Run bfs in a grid to find a path from a give cell to a distination cell
+Run bfs in a grid to find a path from a source cell to a distination cell.
+The grid has obstacle cells and some free cells. One can only walk through
+free cells to reach to destination cell.
