@@ -50,13 +50,13 @@ document.addEventListener("click", function(event) {
 	}
 });
 
-function addDropdownMenuItem (element, item, onclick) {
+function addDropdownMenuItem (element, item, onClickCallBack) {
 	let menuItemEle = document.createElement("div");
 	menuItemEle.innerHTML = item;
 	element.querySelector(".dropdownMenu").append(menuItemEle);
 	menuItemEle.onclick = (event) => {
 		element.querySelector(".dropdownButton").innerHTML = item;
-		onclick(item, event);
+		onClickCallBack(item, event);
 	}
 }
 

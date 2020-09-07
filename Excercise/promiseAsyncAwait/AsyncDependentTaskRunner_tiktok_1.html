@@ -1,0 +1,194 @@
+<html>
+<pre>
+We want to desing an async task runner where the input is async tasks and their dependencies.
+Each dependendant is also an async task and will have further dependencies.
+This runner should run all the given async tasks to completion in the appropriate order.
+For example here - E should run first, then A and B can run asynchronously, then C can
+start running, then D can start.
+
+      A-- |
+          | -- C -- D -- F
+E -- B -- |
+
+A task object may look like this but you may modify it as per the need of your desing.
+const taskA = {
+    id: 'A',
+    job: () => {
+        setTimeout(() => {
+            console.log('\n ran task A');
+        }, 100);
+    }, 
+    depedencies: [],
+}
+
+Part1 - Design a datastructure where we can keep the tasks and their dependancies.
+Part2 - Write a function that takes that datastructure and run the tasks in order
+
+</pre>
+
+<style>
+</style>
+
+<body>
+<script>
+class Task { // task datastructure
+	constructor(id, func) {
+		this.id = id; // id: of the task.
+		this.func = func; // function that takes a callback, invokes the callback asynchronously when it is done.
+		this.dependencies = [];
+	}
+
+	runJob() {
+		return new Promise((resolve, reject) => { // promisify the given function
+		    this.func((error) => {
+		    	if (error) {
+		    		console.log(error);
+		    		reject(this.id + " failed.");
+		    	} else {
+		    		resolve(this.id + " done.");
+		    	}
+		    });
+		});
+	}
+
+	addDependency(task) {
+		this.dependencies.push(task); // dependent task to add
+	}
+}
+
+// defining the tasks
+const A = new Task("A", function(callback) {
+	setTimeout(() => {
+        console.log('ran task A', (new Date()).getTime());
+        callback();
+    }, 100);
+});
+
+const B = new Task("B", function(callback) {
+	setTimeout(() => {
+		// callback(new Error("Error from B"));
+        console.log('ran task B', (new Date()).getTime());
+        callback();
+    }, 100);
+});
+
+const C = new Task("C", function(callback) {
+	setTimeout(() => {
+        // console.log('ran task C', (new Date()).getTime());
+        // callback();
+        callback(new Error("Error from C"));
+    }, 100);
+});
+
+const D = new Task("D", function(callback) {
+	setTimeout(() => {
+        console.log('ran task D', (new Date()).getTime());
+        callback();
+    }, 100);
+});
+
+const E = new Task("E", function(callback) {
+	setTimeout(() => {
+        console.log('ran task E', (new Date()).getTime());
+        callback();
+    }, 100);
+});
+
+const F = new Task("F", function(callback) {
+	setTimeout(() => {
+        console.log('ran task F', (new Date()).getTime());
+        callback();
+    }, 100);
+});
+
+/*
+adding the dependencies
+  	 A -- |
+     	  | -- C -- D -- F
+E -- B -- |
+*/
+B.addDependency(E);
+C.addDependency(B);
+C.addDependency(A);
+D.addDependency(C);
+F.addDependency(D);
+
+asynRunner(F).then(
+        () => console.log(`Completed`),
+        (e)=> console.log(`Not completed, because ${e}`),
+    )
+
+function asynRunner(task) {
+	if (task.dependencies.length === 0) {
+		console.log(`has not dependency, starting ${task.id} right away.`)
+		return task.runJob();
+	} else {
+
+		let dependentPromises = [];
+		for (let dependendantTasks of task.dependencies) { 
+			dependentPromises.push(asynRunner(dependendantTasks)); // recursively calling the dependant tasks and gathering the promise
+		}
+
+        //**************************************************//
+        //SYNTAX 1: WITH WRAPPER PROMISE
+		/*Syntax 1.1: little bit easier to understand, have a wrapper promise (not really needed) which is resolved explicitly, easier to debug the code*/
+        return new Promise((resolve, reject) => { // wrapper promise which is resolve or rejected explicitly
+        	Promise.all(dependentPromises).then(
+        	    (resolvedDataArray) => {  // then's 1st parameter is a function which will be called after all resolved
+        	        console.log(`dependencies are complete, starting ${task.id} `);
+        	        task.runJob().then( // it is the nested then.  this is same as task.runJob().then(resolve, reject);
+						(data) => resolve(data), 
+						(error) => reject(error)    // if current job failed
+					);
+				},
+				(error) => { // if one failed
+				    console.log(error);
+				    reject(`${task.id} didn't start, because ${error}`);
+				}
+			);
+        });
+
+
+		/*Syntax 1.2: you could also have chain instead of nested 'then' -> 'task.runJob().then' , */
+//         return new Promise((resolve, reject) => { // wrapper promise which is resolve or rejected explicitly
+//         	Promise.all(dependentPromises).then(
+//         	    (resolvedDataArray) => {  // then's 1st parameter is a function which will be called after all resolved
+// 					console.log(`dependencies are complete, starting ${task.id} `);
+// 					return task.runJob();
+// 				},
+// 				(error) => { // then's 2nd parameter is a function which will be called if any failed/rejected;
+// 				    console.log(error);
+// 					return Promise.reject(`${task.id} didn't start, because ${error}`);
+// 				}
+// 			).then( // task.runJob() or Promise.reject() will be chained to this 'then' block
+// 			    (dataCurrentJob) => { // resolved state from task.runJob() will be passed here.
+// 			    	resolve(dataCurrentJob);
+// 			    },
+// 				(error) => { // rejected state from 'Promise.reject' will be passed here.
+// 				    reject(error);				
+// 				}
+// 			);
+//         });
+        //**************************************************//
+
+        
+        //**************************************************//
+        //SYNTAX 2: WITHOUT WRAPPER PROMISE. shorter approach but hard to understand and debug. 
+// 		return Promise.all(dependentPromises).then(
+// 		    (resolvedDataArray) => {  // then's 1st parameter is a function that will be called after all resolved
+// 		    	console.log(`dependencies are complete, starting ${task.id}.`)
+// 		    	return task.runJob(); // replace the return promise with this new single promise, it will be chained to the recurssion caller
+// 		    },
+// 		    (error) => { // then's 2nd parameter is a function that will be called if any failed/rejected;
+// 		        console.log(error);
+// 		        return Promise.reject(`${task.id} didn't run, because ${error}`); // replace the return promise with this rejected single promise, it will be chained to the recurssion caller
+// 		    }
+// 		);      
+
+ 	}
+}
+
+</script>
+
+</body>
+</html>

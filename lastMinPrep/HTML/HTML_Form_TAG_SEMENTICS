@@ -1,0 +1,18 @@
+HTML_Form
+
+1. HTML Form - 
+* https://javascript.info/form-elements
+* https://developer.mozilla.org/en-US/docs/Learn/Forms
+
+* Form Elements - https://www.w3schools.com/html/html_form_elements.asp
+  input 	label	select	textArea 	button	
+
+	* Inputs
+		* https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input
+
+		To Rem <input type="button" id="id" name="varNameOf">-
+			type (to rem) = 
+				submit	button	text	textArea
+
+
+* Client-side Form Validation

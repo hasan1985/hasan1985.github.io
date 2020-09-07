@@ -1,0 +1,91 @@
+<html>
+
+<div id="dd1" class="ddEle">
+	<div class="selected">Week days</div>
+	<div class="options"></div>
+</div>
+
+<div id="dd4" class="ddEle">
+	<div class="selected">Years</div>
+	<div class="options"></div>
+</div>
+
+
+
+<div id="dd2" class="ddEle">
+	<div class="selected">Months</div>
+	<div class="options"></div>
+</div>
+
+<div id="dd3" class="ddEle">
+	<div class="selected">Days</div>
+	<div class="options"></div>
+</div>
+
+
+<style>
+.ddEle {
+	position: relative;
+	display: inline-block;
+	border: 1px solid black;
+}
+
+.options {
+	position: absolute;
+	display: none;
+	border: 1px solid black;
+}
+
+.ddEle:hover .options {
+	display: inline-block;
+}
+
+</style>
+<body>
+<script>
+
+function setItems(eleId, items, clickCallback) {
+	let options = document.querySelector("#"+eleId + " .options");
+	options.innerHTML = "";
+	for (let i = 0; i < items.length; i++) {
+		let op = document.createElement("div");
+		options.append(op);
+		op.innerHTML = items[i];
+		op.onclick = () => {
+			clickCallback(i, items[i]);
+		}
+	}
+}
+
+let selectedWeekDay;
+let selectedMonth;
+let selectedDay;
+
+setItems("dd1", ["Sat", "Sun", "Mon"], (idx, item) => {
+	selectedWeekDay = item;
+	console.log(item);
+})
+
+let dayRangeByMonth = {
+	Jan: 31,
+	Feb: 28, // leap year calculation
+	Mar: 31
+};
+
+setItems("dd2", ["Jan", "Feb", "Mar"], (idx, item) => {
+	selectedMonth = item;
+	let days = Array(dayRangeByMonth[selectedMonth]).fill().map((_,i) => i + 1);
+	setItems("dd3", days, (idx, item) => {
+		selectedDay = item;
+		console.log(selectedWeekDay, selectedMonth, selectedDay);
+    })
+});
+
+setItems("dd4", new Array(30).fill().map((_,i) => i+1990), (idx, item) => {
+	console.log(item);
+})
+
+</script>
+
+</body>
+</html>

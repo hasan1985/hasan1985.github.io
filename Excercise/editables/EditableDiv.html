@@ -1,0 +1,32 @@
+<html>
+write a div that shows some text.
+This text can be editable inline.
+It can take some html and will be parsed as html sementic.
+
+On click it can be editable
+on enter or blur out it shows new text or html
+<style>
+</style>
+
+<body>
+<br><br><br>
+<div id="view">edit me with html</div>
+
+<script>
+let view = document.getElementById("view");
+view.onclick = () => {
+	let currentValue = view.innerHTML;
+	let editArea = document.createElement("textarea");
+	view.replaceWith(editArea);
+	editArea.value = currentValue;
+	editArea.focus();
+	editArea.onblur = save;
+	function save() {
+		view.innerHTML = editArea.value;
+		editArea.replaceWith(view);
+	}
+}
+</script>
+
+</body>
+</html>
