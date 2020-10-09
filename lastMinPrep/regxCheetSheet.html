@@ -3,6 +3,7 @@
 </style>
 <body>
 <script>
+// practice - https://edabit.com/collection/7fvfzmSK4cZXkoPWC
 /*
 regx = /pattern/flag
 regexp = new RegExp("pattern", "flags");
@@ -64,6 +65,18 @@ console.log(str.replace(/HTML/, "$' Javascript"));  // I love very much Javascri
 let ph = "=210----418--9302";
 console.log(ph.match(/\d/g));
 console.log(ph.replace(/\d/g, "*"));
+
+//excercise - tokenize this mathematical expression " (1 +(4  + 325 + 2 ) - 03 ) + (236+8) "
+console.log("(1+(4+325+2)-03)+(236+8)".match(/[()+-]|\d+/g)) //
+// details - https://javascript.info/regexp-alternation,
+// https://javascript.info/regexp-character-sets-and-ranges
+// https://javascript.info/regexp-quantifiers
+// 
+
+//excercise - 
+console.log("(2+6* 3+5- (3*14/7+2)*5)+3".match(/[()+-/*//]|\d+/g))
+
+// excercise, mask a phone number ***-***-9403, i.e repace "--234-&^--432-2342--" to "***-***-2345"
 
 </script>
 </body>

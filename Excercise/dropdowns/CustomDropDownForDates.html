@@ -1,0 +1,108 @@
+<html>
+
+<div id="weekDaysDropdown" class="dropdownElement">
+    <div class="dropdownButton">Days</div>
+    <div class="dropdownMenu"></div>
+</div>
+
+<div id="monthsDropdown" class="dropdownElement">
+    <div class="dropdownButton">Months</div>
+    <div class="dropdownMenu"></div>
+</div>
+
+<div id="monthDaysDropdown" class="dropdownElement">
+    <div class="dropdownButton">Days</div>
+    <div class="dropdownMenu"></div>
+</div>
+
+<div id="yearsDropdown" class="dropdownElement">
+    <div class="dropdownButton">Years</div>
+    <div class="dropdownMenu"></div>
+</div>
+
+<style>
+
+.dropdownElement {
+	position: relative;
+	display: inline-block;
+}
+
+.dropdownMenu {
+	display: none;
+	position: absolute
+}
+
+/* .dropdownElement:hover .dropdownMenu {
+	display: inline-block;
+}
+ */
+</style>
+
+<body>
+
+<script>
+
+document.addEventListener("click", function(event) {
+	document.querySelectorAll(".dropdownMenu").forEach((e) => e.style.display = "none");
+	let dropdownElement = event.target.closest(".dropdownElement");
+	if (dropdownElement) {
+		dropdownElement.querySelector(".dropdownMenu").style.display = "inline-block";
+	}
+});
+
+function addDropdownMenuItem (element, item, onClickCallBack) {
+	let menuItemEle = document.createElement("div");
+	menuItemEle.innerHTML = item;
+	element.querySelector(".dropdownMenu").append(menuItemEle);
+	menuItemEle.onclick = (event) => {
+		element.querySelector(".dropdownButton").innerHTML = item;
+		onClickCallBack(item, event);
+	}
+}
+
+let weekDays = ["Sat", "Sun", "Mon", "Tue"];
+let selectedWeekDay = ""
+for (let d of weekDays) {
+	addDropdownMenuItem(document.querySelector("#weekDaysDropdown"), d, (sd, e) => {
+		selectedWeekDay = sd;
+		console.log(sd);
+    });
+}
+
+let daysRange = [31,27,31,30,31,30];
+let selectedMonthDay = 0;
+function setMonthDays(dayCount) {
+	document.querySelector("#monthDaysDropdown .dropdownMenu").innerHTML = "";
+	for (let i = 1; i <= dayCount; i++) {
+		addDropdownMenuItem(document.querySelector("#monthDaysDropdown"), i, (md, e) => {
+			selectedMonthDay = md;
+			console.log(md);
+		});
+	}	
+}
+setMonthDays(31);
+
+let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
+let selectedMon = ""
+for (let m of months) {
+	addDropdownMenuItem(document.querySelector("#monthsDropdown"), m, (sm, e) => {
+		selectedMon = sm;
+		console.log(sm);
+		let monthIdx = months.indexOf(sm);
+		setMonthDays(daysRange[monthIdx]);
+    });
+}
+
+let selectedYear;
+for (let y = 1985; y < 2020; y++) {
+	addDropdownMenuItem(document.querySelector("#yearsDropdown"), y, (sy, e) => {
+		selectedYear = sy;
+		console.log(sy);
+    });
+}
+
+
+</script>
+
+</body>
+</html>

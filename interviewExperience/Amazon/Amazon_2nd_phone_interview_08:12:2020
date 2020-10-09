@@ -1,0 +1,47 @@
+Online/phone interview - 08/12/2020
+
+Questions: Find out a pair with a given sum in a balanced binary search tree.
+
+                15
+         /        \
+    10             20
+  /     \        /     \
+8      12       16     25
+
+Find 28
+- 8 + 20
+
+class Node {
+    left: node;
+    right: node;
+    val: number;
+}
+
+function solution(root, target) {
+    let numMap = new Map();
+    let result = [];
+    function buildSet(node) {
+        if (node == null) return;
+        numSet.set(node.val, true);
+        buildSet(node.left);
+        buildSet(node.right);
+    }
+    buildSet(root);
+    
+    function checkTarget(node) {
+        if (node == null) return;
+        if (numMap.has(target - node.val)) {
+            result.push(node.val);
+            result.push(target - node.val);
+            return;
+        }
+        if (result.length === 0) {
+            checkTarget(node.left);
+        }
+        if (result.length === 0) {
+            checkTarget(node.right);
+        }
+    }
+    checkTarget(root);
+    return result;   
+}

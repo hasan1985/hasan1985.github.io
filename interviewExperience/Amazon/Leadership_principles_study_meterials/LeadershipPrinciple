@@ -1,0 +1,99 @@
+LeadershipPrinciple
+
+with questions - https://managementconsulted.com/amazon-leadership-principles/
+https://kraftshala.com/what-questions-to-expect-in-amazon-interview/
+https://www.amazon.jobs/en/principles
+https://medium.com/@scarletinked/are-you-the-leader-were-looking-for-interviewing-at-amazon-8301d787815d
+https://www.linkedin.com/pulse/how-interview-amazon-using-leadership-principles-jennifer-scupi/
+https://www.youtube.com/watch?v=CpcxVE5JIX4
+
+================================================
+================================================
+Stories for Leadership Principle-
+
+1. Customer Obsession
+story-1:
+
+story-2:
+
+================================================
+2. Ownership
+story-1: I was the only UI engineer of EUM Synthetic product for 2 years. I was at frontline to triage any customer escalation tickets
+to determine the high issue or redirect to backend engineers.
+
+There was an issue with customer license page for one of our product - "eum-synthetic". We ususally get customer saas page access with user-role of supportEnginner to investigate any issue. But in this case we need admin access becaue only admin can see license page. So I requested customer support team to setup a virtual meeting with customer so that I can investige the issue in their screen. After investigating I found analytics-license check was returning false. "Analytics" used to be sold as a separate product until recently. And to have eum-synthetic data, customer needs analytics data as well. Recently analytics became free along with any other products. So the back-end disabled the analytics license check logic and was returning null to the UI where we didn't un-tie the analytics license check with synthetic license check on this license UI. So even though there sysnthetic product was working fine but the license page was showing "no license". The point I want to express that I immidiatly stablished a contact with customer with my intiative pretty soon for this case.
+
+story-2:
+When I moved to another team I seemlessly handed over all knowladge and responsibilty to a new hire engineer for eum-synthetic ui for which for which I used to be the defacto owener for the UI code of this product.
+
+================================================
+3. Invent and Simplify
+	story-1: Convertin direct graph to a tree in user journey project - 
+
+story-2:
+
+================================================
+4. Are Right, A Lot
+story-1:
+
+story-2:
+
+================================================
+5. Learn and Be Curious
+story-1:
+
+story-2:
+
+================================================
+6. Hire and Develop the Best
+story-1:
+
+story-2:
+
+================================================
+7. Insist on the Highest Standards
+story-1:
+
+story-2:
+
+================================================
+8. Think big
+story-1:
+
+story-2:
+
+================================================
+9. Bias for action
+story-1:
+
+story-2:
+
+================================================
+10. Frugality
+story-1:
+
+story-2:
+
+================================================
+11. Earn trust
+story-1:
+
+story-2:
+
+================================================
+12. Dive deep
+story-1:
+
+story-2:
+
+================================================
+13. Have backbone, disagree and commit
+story-1:
+
+story-2:
+
+================================================
+14. Deliver result
+story-1:
+
+story-2:

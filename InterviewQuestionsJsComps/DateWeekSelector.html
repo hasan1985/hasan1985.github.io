@@ -5,9 +5,56 @@
 </style>
 
 <body>
-
+<select id="years"></select> <br><br>
+<select id="months"></select> <br><br>
+<select id="days"></select> <br><br>
+<select id="weekDays"></select> <br> <br>
 
 <script>
+function addSelectOptions(element, items, onSelectChange) {
+	items.forEach((item, index) => {
+		const optEle = document.createElement("option");
+		optEle.value = index;
+		optEle.text = item;
+		element.append(optEle);
+	});
+	element.onchange = (event) => onSelectChange(event.target.value);
+}
+
+function getDays(range) {
+	
+	
+}
+
+const years = Array(100).fill().map((_, i) => i+1950);
+const months = ["JAN", "FEB", "MAR", "APR"];
+const dayRange = [31, 28, 31, 30];
+const weekDays = ["SAT", "SUN", "MON"];
+
+let selectedYear = years[0];
+let selectedMon = months[0];
+let selectedDay = 1;
+let selectedWeekDay;
+
+addSelectOptions(document.getElementById("years"), years, (index) => {
+	selectedYear = years[index];
+});
+
+addSelectOptions(document.getElementById("days"), Array(31).fill().map((_,i) => i+1), (day) => {
+	selectedDay = day + 1;
+});
+
+addSelectOptions(document.getElementById("months"), months, (index) => {
+	selectedMon = months[index];
+	addSelectOptions(document.getElementById("days"), Array(dayRange[index]).fill().map((_,i) => i+1), (day) => {
+		selectedDay = day + 1;
+	});
+});
+
+addSelectOptions(document.getElementById("weekDays"), weekDays, (index) => {
+	selectedWeekDay = weekDays[index];
+	console.log(selectedMon, selectedDay, selectedWeekDay, selectedYear);
+});
 
 </script>
 

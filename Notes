@@ -1,0 +1,10 @@
+Notes
+
+1. 	In javascript calling a function with 'new' operator acts like a constructor.
+2. 	A function, as an object, will always have a field called prototype. This can
+	be used as inheritance. This is why it is said JS creates inheritance using
+	prototype chain. Prototype is just another object which contains a function
+	named "constructor". This actually points to the function (to which the prototype
+	belongs to). This constructor function is actaully called when using "new". We
+	can see if the constructor function points to any other function (f) then the 'new'
+	keyword will invoke that function (f).
