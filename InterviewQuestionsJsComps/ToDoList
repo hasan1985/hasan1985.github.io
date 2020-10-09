@@ -1,23 +1,16 @@
 ToDo List
 
-1. Year, Month, Day, WeekDay Picket
-	a. select drop down with initialization
+1. Year, Month, Day, WeekDay Picket - in progress
+	a. select drop down with initialization - done
 
-2. Quiz radio button questions
-	a. select radio button
+2. Quiz picker
+	a. selec radion button
 
-3. Mail box folder with hierarchy
+3. Mail box folder with hirarchy
 
 4. Toolbar with drop down
 
 5. Build a type ahead component
 
-6. build a date picker
+6 build a date picker
 
-7. Loading bar
-
-8. Text-box text-area input auto complete
-
-9. Add some checkbox
-
-10. Type ahead dropdown

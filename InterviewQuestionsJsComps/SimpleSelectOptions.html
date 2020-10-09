@@ -1,0 +1,32 @@
+<html>
+<pre>Write a JS function that will take a list of items then will create a dropdown list.
+Should print a console message with value once an item is selected on the list.</pre>
+
+<select id="week"></select>
+
+<style>
+</style>
+
+<body>
+
+<script>
+function initSelectOptions(selectEle, items, onSelectionChange) {
+	items.forEach((item, idx) => {
+		const option = document.createElement("option");
+		option.text = item.name;
+		option.value = idx;
+		selectEle.append(option);
+	});
+	selectEle.onchange = (e) => onSelectionChange(items[e.target.value]);
+}
+
+const days = [{name: "Sat"}, {name: "Sun"}, {name: "Mon"},
+			  {name: "Tue"}, {name: "Wed"}, {name: "Thr"}, {name: "Fri"}]
+initSelectOptions(document.getElementById("week"), days, (day) => {
+	console.log(day.name);
+})
+
+</script>
+
+</body>
+</html>

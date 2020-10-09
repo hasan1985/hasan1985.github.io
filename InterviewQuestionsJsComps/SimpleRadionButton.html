@@ -1,0 +1,80 @@
+<html>
+<style>
+</style>
+
+<body>
+
+<pre>build a radion button picker</pre>
+
+<div id="ChoiseOfCars"></div>
+<br><br>
+<div id="choseOfLaptop"></div>
+<!-- <input id="value_1", type="radio", name="groupName"><label for="value_1">value_1</label><br> 
+	name can be used as radio or checkbox groups where only one can be selected
+-->
+<script>
+
+/* ///////////One way/////////////////
+Using dom elements
+*/
+function initRadioButtonGroup_1(elem, config, onSelect) {
+	elem.append(document.createTextNode(config.header));
+	elem.append(document.createElement("br"));
+	config.options.forEach((item, idx) => {
+		const input = document.createElement("input");
+		input.type = "radio";
+		input.id = elem.id + "_" + idx; 
+		input.name = elem.id; // radio button group!!!
+		input.checked = idx === config.defaultIdx;
+		elem.append(input);
+
+		const label = document.createElement("label");
+		label.htmlFor = input.id;
+		label.append(document.createTextNode(item));
+		elem.append(label);
+		input.onchange = onSelect(config.options[idx]);
+		elem.append(document.createElement("br"));
+	});
+}
+
+/* ///////////One way/////////////////
+using inner HTML
+*/
+function initRadioButtonGroup(elem, config, onSelect) {
+	elem.innerHTML = `<div>${config.header}</div>`;
+	config.options.forEach((item, idx) => {
+		const radio = document.createElement("div");
+		// here name serves as a group ID for all the radio inputs
+		radio.innerHTML = `<input id=${elem.id+""+idx} type=radio name=${elem.id}>` + 
+						  `<label for=${elem.id+""+idx}>${item}</label>`;
+		radio.firstElementChild.checked = idx === config.defaultIdx;
+		radio.firstElementChild.onchange = onSelect(config.options[idx]);
+		elem.append(radio);
+	});
+}
+
+const radioOption = {
+	header: "Your favorite car",
+	options: ["Honda", "BMW", "ACURA"],
+	defaultIdx: 1,
+}
+let chosenCar;
+initRadioButtonGroup(document.getElementById("ChoiseOfCars"), radioOption, (selected) => {
+	chosenCar = selected;
+	console.log(selected);
+});
+
+const radioOptionLaptop = {
+	header: "Your favorite laptop",
+	options: ["MAC", "PC"],
+	defaultIdx: 1
+}
+let chosenLaptop
+initRadioButtonGroup(document.getElementById("choseOfLaptop"), radioOptionLaptop, (selected) => {
+	chosenLaptop = selected;
+	console.log(selected);
+});
+
+</script>
+</body>
+</html>
