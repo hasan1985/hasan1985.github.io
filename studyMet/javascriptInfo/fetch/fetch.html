@@ -7,21 +7,34 @@
 <div class="output"></div>
 
 <script>
-// with promise
-let url = 'https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits';
+// good read - https://www.freecodecamp.org/news/here-is-the-most-popular-ways-to-make-an-http-request-in-javascript-954ce8c95aaa/
+
+let url = 'https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits a';
 
 
-fetch(url).then(response => response.json()).then(json => {
-    console.log("fetch with promise")
+/* fetch with promise */
+fetch(url).then(response => {
+    console.dir(response);
+    return response.json();   
+}).then(json => {
+    console.dir(json);
     console.log(json[0].author);
+}).catch(e => {
+    console.log("something failed");
 });
 
-(async function () {
-    let response = await fetch(url);
-    let json = await response.json();
-    console.log("with async await");
-    console.log(json[0].author);
-})()
+// "async await fetch"
+// (async function () {
+//     let response = await fetch(url);
+//     console.dir(response);
+//     if (response.ok) {
+//         let json = await response.json();
+//         console.dir(json[0].author);    
+//     } else {
+//         console.log("response failed");    
+//     }
+// })()
+
 
 </script>
 
