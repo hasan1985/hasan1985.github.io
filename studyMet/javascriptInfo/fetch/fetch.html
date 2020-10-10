@@ -10,9 +10,19 @@
 // with promise
 let url = 'https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits';
 
+
 fetch(url).then(response => response.json()).then(json => {
+    console.log("fetch with promise")
     console.log(json[0].author);
-})
+});
+
+(async function () {
+    let response = await fetch(url);
+    let json = await response.json();
+    console.log("with async await");
+    console.log(json[0].author);
+})()
+
 </script>
 
 </body>
