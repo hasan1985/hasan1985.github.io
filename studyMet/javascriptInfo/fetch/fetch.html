@@ -9,31 +9,34 @@
 <script>
 // good read - https://www.freecodecamp.org/news/here-is-the-most-popular-ways-to-make-an-http-request-in-javascript-954ce8c95aaa/
 
-let url = 'https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits a';
+let url = 'https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits';
 
 
 /* fetch with promise */
-fetch(url).then(response => {
+fetch(url).then((response) => {
     console.dir(response);
-    return response.json();   
-}).then(json => {
-    console.dir(json);
-    console.log(json[0].author);
-}).catch(e => {
-    console.log("something failed");
+    if (response.ok) {
+        return response.json();    
+    } else {
+        throw new Error("res")
+    }
+}).then(jsonData => {
+    console.dir(jsonData);
+}).catch(error => {
+    console.log("fetch failed")
 });
 
-// "async await fetch"
-// (async function () {
-//     let response = await fetch(url);
-//     console.dir(response);
-//     if (response.ok) {
-//         let json = await response.json();
-//         console.dir(json[0].author);    
-//     } else {
-//         console.log("response failed");    
-//     }
-// })()
+/* "async await fetch" */
+(async function () {
+    let response = await fetch(url);
+    console.dir(response);
+    if (response.ok) {
+        let json = await response.json();
+        console.dir(json[0].author);    
+    } else {
+        console.log("response failed");    
+    }
+})()
 
 
 </script>

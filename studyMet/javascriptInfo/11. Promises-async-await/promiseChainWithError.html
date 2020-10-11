@@ -1,0 +1,41 @@
+// templace.html
+
+<html>
+<body>
+
+<script>
+let promise = new Promise((resolve, reject) => {
+	// setTimeout(() => resolve("resolve data."), 100); // comment this out and try rejecting it.
+	setTimeout(() => reject("reject data."), 100);
+});
+
+promise.then(data => {
+	console.log(data);
+	// throw new Error("my error") // conmment it out and see
+	return data;
+}).then(data => {
+	console.log(data, "in 2nd chain block.");
+}).then(data => {
+	console.log(data, "in 3rd chain block.");
+	return "new data from 3rd block.";
+}).catch(err => {
+	// after catch chain will be in non-error state, ie. 2nd error bock not executing.
+	// catch block also catches rejected promise.
+	console.log(err, "in 1st catch block.");
+	// return err;
+}).then(data => {
+	console.log(data, "in 4th chain block.");
+}).catch(err => {
+	console.log(err, "in 2nd catch block.");
+}).then(data => {
+	console.log(data, "in 5th chain block.");
+	return "new data from 5th block."
+}).finally(() => { // finally has no param.
+	console.log("in finally block.")
+})
+
+	
+</script>
+
+</body>
+</html>

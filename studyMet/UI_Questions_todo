@@ -26,7 +26,8 @@ Do amplitude question from Edris
 Do dropbox question from Edris
 Review coinBase tripleByte questions
 Draw two squares and a circle at the center
-sum(1)(2)(3)(4)..(n) => 1+2+3+...+n
+sum(1)(2)(3)(4)..(n)() => 1+2+3+...+n
+Draw image and send it to a server - https://javascript.info/fetch#sending-an-image
 
 
 

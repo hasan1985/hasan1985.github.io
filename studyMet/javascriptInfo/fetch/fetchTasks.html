@@ -1,0 +1,182 @@
+<html>
+
+<style>
+</style>
+<body>
+
+<div class="users"></div>
+
+<script>
+
+const url = `https://api.github.com/users`;
+
+// ==========================Testing===============================================
+getUser_Parallel_shorter_only_valid_user_2(["qazsdfsdfsdfsdfsd", "lei-hsia", "hasan1985"]).then(users => {
+    let ulElement = document.createElement("ul");
+    document.querySelector(".users").append(ulElement);
+    for (user of users) {
+        let liElement = document.createElement("li");
+        liElement.innerHTML = user.login;
+        ulElement.append(liElement);
+    }    
+    console.dir(users);
+});
+
+// ================================================================================
+async function getUser_1(names) { // sequencial call for each user, can we make it parallel?
+    let users = [];
+    for (name of names) {
+        try {
+            let response = await fetch(`https://api.github.com/users/${name}`);
+            if (response.ok) {
+                let user = await response.json();
+                users.push(user);            
+            } else {
+                console.log(name + " not found")
+            }            
+        } catch(err) {
+            console.log("in error block", err);
+        }
+        
+    }
+    return users;
+}
+
+// ================================================================================
+async function getUser_Parallel_wrong(names) {
+
+    let promises = [];
+    let users = [];
+    for (let name of names) {
+        let promise = fetch(`${url}/${name}`).then(
+            (response) => {
+                async function readJsonAndSetUser(response) {
+                    // let json = await response.json();
+                    let json = await readJsonDelayed(response)
+                    users.push(json);
+                }
+                readJsonAndSetUser(response);
+            },
+            (error) => {
+                console.log("fetch failed for ", name);
+            }    
+        );
+        promises.push(promise);
+    }
+    await Promise.all(promises);    // its wrong, what if the response.json() take long time to resolve?
+    return users;
+}
+
+// ================================================================================
+async function getUser_Parallel_correct(names) { // correct of previous solution
+    let promises = [];
+    let readPromises = []
+    let users = [];
+    for (let name of names) {
+        let promise = fetch(`${url}/${name}`).then(
+            (response) => {
+                let readPromise = readJsonDelayed(response).then(json => {
+                    users.push(json); 
+                });
+                readPromises.push(readPromise);
+            },
+            (error) => {
+                console.log("fetch failed for ", name);
+            }    
+        );
+        promises.push(promise);
+    }
+    await Promise.all(promises);
+    await Promise.all(readPromises); // making sure both promise chain is blocking. can we make it shorter?
+    return users;
+}
+
+// ================================================================================
+async function getUser_Parallel_2(names) { // shortcut of previous version.
+    let promises = [];
+    let validUsers = [];
+    for (let name of names) {
+        let fetchOrJsonReadPromise = fetch(`${url}/${name}`).then(response => {
+            if (response.ok) {
+                // hard to understand. Converts promise during prmise chain.
+                // returning json read promise it will convert fetch promise to json read promise;
+                return readJsonDelayed(response).then(json => validUsers.push(json));
+            } else {
+                console.log("response not ok")
+            }
+        }).catch(err => {
+            console.log("fetch failed")
+        });
+        promises.push(fetchOrJsonReadPromise);
+    }
+
+    console.log(promises);
+    await Promise.all(promises); // waiting for one chaing or promise where in previous solution waited for 2 chain.
+    return validUsers;
+    // return Promise.all(promises).then(() => validUsers); without async await;
+}
+
+// ==================================================================================
+async function getUser_Parallel_shorter(names) { // ll return null for non existing user name
+    return await Promise.all(
+        names.map(name => 
+            fetch(`${url}/${name}`).then(response => readJsonDelayed(response))
+        )
+    );
+}
+
+// ==================================================================================
+async function getUser_Parallel_shorter_only_valid_user(names) { // ll only return valid users, but no longer orderred
+    let onlyValidUser = [];
+    let allData = await Promise.all(
+        names.map(name => {
+            return fetch(`${url}/${name}`).then(response => {
+                if (response.ok) {
+                    let readPromise = readJsonDelayed(response);
+                    readPromise.then(json => onlyValidUser.push(json));
+                    return readPromise;
+                }
+            })   
+        })
+    );
+    
+    console.log(allData); // ll have undefined data too
+
+    return onlyValidUser;
+}
+
+async function getUser_Parallel_shorter_only_valid_user_2(names) { // ll only return valid users, but no longer orderred
+    let onlyValidUser = [];
+    return await Promise.all(
+        names.map(name => 
+            fetch(`${url}/${name}`).then(response => {
+                if (response.ok) {
+                    let readPromise = readJsonDelayed(response);
+                    readPromise.then(json => onlyValidUser.push(json));
+                    return readPromise;
+                }
+            })
+        )
+    ).then(() => onlyValidUser); // convert the promise chain with different return data.    
+}
+
+
+// ================Helpers===========================================================
+function delay(time) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => resolve(), time)
+    });
+}
+
+async function readJsonDelayed(response) {
+    await delay(1000);
+    let json = await response.json();
+    return json;
+}
+
+    
+
+</script>
+
+</body>
+</html>
