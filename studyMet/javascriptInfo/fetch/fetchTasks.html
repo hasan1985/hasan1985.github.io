@@ -151,9 +151,8 @@ async function getUser_Parallel_shorter_only_valid_user_2(names) { // ll only re
         names.map(name => 
             fetch(`${url}/${name}`).then(response => {
                 if (response.ok) {
-                    let readPromise = readJsonDelayed(response);
-                    readPromise.then(json => onlyValidUser.push(json));
-                    return readPromise;
+                        return readJsonDelayed(response)
+                                .then(json => onlyValidUser.push(json));;
                 }
             })
         )
