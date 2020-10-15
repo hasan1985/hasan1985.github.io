@@ -1,0 +1,38 @@
+<html>
+
+<style>
+</style>
+
+<body>
+
+
+<script>
+
+function delayedCounter(val) {
+	return new Promise(resolve => {
+		setTimeout(() => {
+			resolve(val+1);
+		}, 500);
+	});
+}
+function incrementerAsync(init, func, max) {
+	let promise = delayedCounter(init);
+	return async function() {
+		let value = await promise;
+		promise = delayedCounter(value);
+		return value > max ? max : value;
+	}
+}
+const myCounter = incrementerAsync(0, delayedCounter, 4);
+(async function () {
+	await myCounter().then(i => console.log(i));
+    await myCounter().then(i => console.log(i));
+	await myCounter().then(i => console.log(i));
+	await myCounter().then(i => console.log(i));
+	await myCounter().then(i => console.log(i));	
+})()
+
+</script>
+
+</body>
+</html>
