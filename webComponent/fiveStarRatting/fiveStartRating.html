@@ -1,0 +1,104 @@
+<html>
+
+<style>
+body {
+    background-color: black;
+    color: white;    
+}
+</style>
+<body>
+
+<script>
+class FiveStartRater extends HTMLElement {
+    constructor() {
+        super();
+    }
+
+    connectedCallback() {
+        this.innerHTML = this.getTemplate();
+        this.rating = this.getAttribute("rating");
+        this.stars = this.querySelectorAll(".star");
+        this.onRatingChange = this.getAttribute("onchange");
+
+        this.highlightStar(this.rating);
+
+        this.stars.forEach(elem => {
+            elem.onmouseover = (event) => {
+                let index = elem.getAttribute("data-value");
+                this.highlightStar(index);
+            }
+
+            elem.onclick = (event) => {
+                let index = elem.getAttribute("data-value");
+                this.rating = this.rating == index ? this.rating - 1 : index;
+                this.highlightStar(this.rating);
+                this.setAttribute("rating", this.rating);
+
+                if (this.onRatingChange instanceof Function) {
+                    this.onRatingChange(this.rating);
+                }
+            }
+        });
+
+        this.onmouseleave = (event) => {
+            this.highlightStar(this.rating);
+        }
+    }
+
+    highlightStar(index) {
+        this.stars.forEach((ele, i) => {
+            ele.style.color = i <= index ? "yellow" : "gray";
+        });
+    }
+
+    setRating(value) {
+        this.rating = value;
+        this.highlightStar(this.rating);
+    }
+
+    getTemplate() {
+        return `
+            <span class="star" data-value="0">&#9733</span>
+            <span class="star" data-value="1">&#9733</span>
+            <span class="star" data-value="2">&#9733</span>
+            <span class="star" data-value="3">&#9733</span>
+            <span class="star" data-value="4">&#9733</span>
+        `;
+    }
+
+    disconnectedCallback() {
+    }
+
+    static get observedAttributes() {
+        return ["rating"];
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (name == "rating" && this.stars) {
+            if (oldValue !== newValue) {
+                this.rating = newValue;
+                this.setRating(this.rating);
+            }
+        }
+    }
+}
+
+customElements.define("x-five-start-rater", FiveStartRater);
+</script>
+<x-five-start-rater id="starRating1" rating="0" ></x-five-start-rater>
+
+<script>
+const rating1 = document.getElementById("starRating1");
+// html attribute only takes strings so no way to pass it as callback func reference
+rating1.onRatingChange = (rating) => console.log("rated", rating);
+rating1.onRatingChange = function(rating) { 
+    console.log("rated", rating);
+    console.log(this.id);
+}
+rating1.setRating(-1);
+
+rating1.setAttribute("rating", "4");
+</script>
+
+</body>
+</html>

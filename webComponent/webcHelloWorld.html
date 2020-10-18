@@ -1,0 +1,39 @@
+<html>
+
+<style>
+body {
+    background-color: black;
+    color: white;    
+}
+</style>
+
+<body>
+
+<script>
+
+class HelloWorldElement extends HTMLElement {
+    constructor() {
+        super();
+    }
+
+    connectedCallback() {
+        this.innerHTML = "hello world";
+    }
+
+    disconnectedCallback() {
+
+    }
+
+    static get observedAttributes() {
+    return [/* array of attribute names to monitor for changes */];
+  }
+}
+
+customElements.define("hello-world", HelloWorldElement);
+
+</script>
+
+<hello-world></hello-world>
+
+</body>
+</html>
