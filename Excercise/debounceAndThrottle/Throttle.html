@@ -1,0 +1,72 @@
+<html>
+
+<style>
+body {
+    background-color: black;
+    color: white;    
+}
+
+</style>
+
+<body>
+<script>
+'use strict';
+
+// function test() {
+//     console.dir(this); // this is undefined when 'use strict' otherwise not
+//     setTimeout(function() {
+//         console.dir(this);  // but here its window/global. in non fat arrow fun this will point to window    
+//     }, 0);    
+// } 
+// test();
+// const testFat = () => {console.dir(this)}; // defined
+// testFat();
+
+
+
+function throttle(func, delay) {
+    let blocked = false;
+    return function() {
+        if (!blocked) {
+            blocked = true;
+            let context = this;     // not needed since using fat arrow in setTimeout   
+            let arg = arguments;    // not needed since using fat arrow in setTimeout
+            // setTimeout(function() { // in non fat arrow fun this will point to window    
+            setTimeout(() => {      
+                func.apply(context, arg);
+                blocked = false;
+            }, delay);
+        }
+    };
+}
+
+
+this.context = "global"
+let throttledFun = throttle(function(a,b) {
+    console.log(a,b, this.context);
+}, 100).bind(this); // without binding context 'this' will not work in console log. 
+throttledFun(1,2);
+throttledFun(3,4);
+setTimeout(() => {
+    throttledFun(4,5);
+}, 200);
+
+
+function exe2() {
+    this.context = "exe2";
+    let throttledFun = throttle(function(a,b,c) {
+        console.log(a,b,c, this.context)
+    }, 100).bind(this);
+
+    throttledFun(4,5,6);
+    throttledFun(7,8,9);
+    setTimeout(() => {
+        throttledFun(11,12,13);
+    },101)
+}
+new exe2();
+
+</script>
+
+</body>
+</html>
