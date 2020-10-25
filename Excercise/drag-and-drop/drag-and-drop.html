@@ -24,6 +24,8 @@ body {
 </style>
 
 <body>
+<a href="https://glitch.com/edit/#!/simple-drag-drop?path=dnd.js%3A64%3A5">sample code</a>
+<br><br>
 
 <div class="myGridContainer">
     <div draggable="true">A</div>
@@ -33,21 +35,67 @@ body {
 </div>
 
 <script>
+console.log(Date.now());
+
+let draggedElement;
+
 function handleDragStart(e) {
-    e.target.style.opacity = '0.5'; // e.target == this
-    e.target.style.color = 'green'
+    let elem = e.target; // e.target == this
+    elem.style.opacity = '0.5';
+    elem.style.color = 'green'
+
+    draggedElement = elem;
+    // e.dataTransfer.setData("text/html", elem.innerHTML); // setData only takes strings no object ref
 }
 
 function handleDragEnd(e) {
     e.target.style.opacity = '1';
     e.target.style.color = 'white'
+    console.log(this.innerHTML);
 }
 
-let elems = document.querySelectorAll(".myGridContainer > div");
+function handleDragOver(e) {
+    // console.log("drag over", e.target.innerText, Date.now());
+    // use throttled if want to change some html
+    e.preventDefault(); // need preventDefault for dragover, otherwise drop event doesn't work
+}
+
+function handleDragEnter(e) {   // after starting a drag if mouse pointer enters any element;
+    console.log("drag enter", e.target.innerText, Date.now());
+}
+
+function handleDragLeave(e) {   // after starting a drag if mouse pointer leave any element
+    console.log("drag leave", e.target.innerText, Date.now());
+}
+
+function handleDrop(e) {
+    if (draggedElement != this) {
+      [draggedElement.innerHTML , this.innerHTML] = [this.innerHTML , draggedElement.innerHTML];
+    }
+}
+
+let elems = document.querySelectorAll(".myGridContainer div");
 elems.forEach((elem) => {
     elem.addEventListener("dragstart", handleDragStart);
+    elem.addEventListener("dragover", handleDragOver);
+    elem.addEventListener("dragenter", handleDragEnter);
+    elem.addEventListener("dragleave", handleDragLeave);
+    elem.addEventListener('drop', handleDrop);
     elem.addEventListener("dragend", handleDragEnd);
 })
+
+function throttled(callback, delay) {
+    let recentlyDone = false;
+    return function() {
+        if (recentlyDone == false) {
+            recentlyDone = true;
+            setTimeout(() => {
+                recentlyDone = false;
+                callback.apply(this, arguments);
+            }, delay);
+        }
+    }
+}
 
 </script>
 
