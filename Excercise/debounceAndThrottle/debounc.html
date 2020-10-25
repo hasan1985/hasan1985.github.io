@@ -1,0 +1,69 @@
+<html>
+
+<style>
+body {
+    background-color: black;
+    color: white;    
+}
+</style>
+
+<body>
+
+
+<script>
+// because of it "this" will not point to global object (Window) inside a function execution by default
+'use strict';
+
+// look at throttle sample code, it has some example for wired 'this' stuff.
+
+function debounce(func, delay) {
+    let timmer;
+    return function() {
+        let context = this; //LineRef-1 // this is not really needed since I used fat arrow
+        let arg = arguments; // this is not really needed if you use fat arrow
+        clearTimeout(timmer); // 1st time timmer will be undefined but thats ok;
+        timmer = setTimeout(() => { // in NON fat arrow fun in setTimeout "this" will point to window. setTimeout callback is called with global context.
+            func.apply(context, arg); // fat-arrow has no 'this' 'arguments' of it own, it takes it from parent function.
+        }, delay)
+    }
+}
+
+this.context = "global";
+let deb1 = debounce(function(a,b,c) {
+    console.log(a,b,c, this.context);
+}, 100).bind(this) // adding the context of debounce function;
+
+deb1(1,2,3);
+deb1(4,2,3);
+
+function exe() { // see how 'this/context' passed from different function block
+    this.context = "exe";
+
+    function callback(a,b) {
+        console.log(a,b, this.context);
+    }
+
+    let debouncedFunction = debounce(callback, 500);
+    let boundedFun = debouncedFunction.bind(this) // adding the context of debounce function.
+    boundedFun(1,2);
+    boundedFun(3,4);
+}
+new exe();  // withtout 'new' a function has no 'this' of its own.
+
+function exe2() { 
+    this.context = "exe2";
+    let debouncedFunction = debounce(function(a) {
+        console.log(a, this.context); // LineRef-2 // 5, exe2
+    }.bind(this), 100);
+    // 'this' is bound to inner most function.
+    // In such case LineRef-1 will have 'this' == undefined
+    // but still console log will print expected context in LineRef-2
+    // it is equivalent of using fat arrow for the inner function.
+    debouncedFunction(5);
+}
+new exe2();
+
+</script>
+
+</body>
+</html>
