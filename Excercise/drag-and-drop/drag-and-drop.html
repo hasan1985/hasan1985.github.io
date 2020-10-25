@@ -1,0 +1,55 @@
+<html>
+
+<style>
+body {
+    background: black;
+    color: white;
+}
+
+.myGridContainer {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 10px;
+}
+
+/*
+'>' = direct descendant
+*/
+.myGridContainer > div {
+    border: 1px solid red;
+    text-align: center;
+}
+
+
+</style>
+
+<body>
+
+<div class="myGridContainer">
+    <div draggable="true">A</div>
+    <div draggable="true">B</div>
+    <div draggable="true">C</div>
+    <div draggable="true">D</div>
+</div>
+
+<script>
+function handleDragStart(e) {
+    e.target.style.opacity = '0.5'; // e.target == this
+    e.target.style.color = 'green'
+}
+
+function handleDragEnd(e) {
+    e.target.style.opacity = '1';
+    e.target.style.color = 'white'
+}
+
+let elems = document.querySelectorAll(".myGridContainer > div");
+elems.forEach((elem) => {
+    elem.addEventListener("dragstart", handleDragStart);
+    elem.addEventListener("dragend", handleDragEnd);
+})
+
+</script>
+
+</body>
+</html>
