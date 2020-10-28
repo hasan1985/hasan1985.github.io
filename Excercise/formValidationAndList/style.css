@@ -1,0 +1,12 @@
+
+.list {
+    margin-top: 10px;
+    border: 1px solid red;
+}
+
+.listGrid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    margin-top: 10px;
+    border: 1px solid green;
+}

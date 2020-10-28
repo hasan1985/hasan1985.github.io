@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <title>Forms</title>
+</head>
+
+<body>
+    <!-- <form action="list.html" method="GET"> -->
+    <form id="myForm" onsubmit="onSavePerson(this)">
+        <label for="name">Name: </label>
+        <input type="text" name="personName" id="name">
+        <label for="age">Age: </label>
+        <input type="text" name="age" id="age">
+        <input type="submit" value="submit">
+
+        <!-- button will work as well -->
+        <!-- <button type="submit" onclick="savePerson()">Submit</button> --> 
+    </form>
+
+    <div class="list">
+        <div>List - </div>
+        <div class="listGrid"></div>
+    </div>
+
+    <script src="main.js"></script>
+
+</body>
