@@ -1,15 +1,10 @@
 function onSavePerson(form) {
-    let list = this.getList()
+    let list = getList()
     let newPerson = {};
     newPerson.name = form.personName.value;
     newPerson.age = form.age.value;
     list.push(newPerson);
-    this.saveList(list);
-}
-
-function removeItemByName(name) {
-    console.log(this, "removing ", name);
-    const list = this.getList();
+    saveList(list);
 }
 
 function getList() {
@@ -33,7 +28,7 @@ function debounce(func, delay) {
 
 // let will not be accessable by 'this == window'
 // but var or any function ...() can be used by 'this == window'
-let delayedPrint = debounce(printList.bind(this), 1000);
+let delayedPrint = debounce(printList, 1000);
 
 function printList() {
     console.log("print list")
