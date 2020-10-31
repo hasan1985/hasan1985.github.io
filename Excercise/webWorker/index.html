@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>web worker</title>
+    </head>
+    <body>
+        <!--
+        <button onclick="startWorker()">start worker</button>
+        <button onclick="stopWorker()">stop worker</button>
+        <script type="module">
+            import * as main from './main.js';
+            // module funcionts are not added to window scope
+            // so onclick="startWorker()" will not work
+            window.startWorker = main.startWorker;
+        </script>
+        -->
+
+        <button id="startButton">start worker</button>
+        <button id="endButton">stop worker</button>
+        <script src="main.js"></script>
+    </body>
+</html>

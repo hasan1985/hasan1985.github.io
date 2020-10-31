@@ -1,0 +1,80 @@
+<html>
+
+<style>
+body {
+    background-color: black;
+    color: white;    
+}
+
+</style>
+
+<body>
+
+
+<script>
+class Animal {
+    outVar = "outVar";
+    constructor() {
+        this.propFromThis = "propFromThis";
+        console.log("in cons", this.propFromThis);
+    }
+
+    fun1() {
+        this.propInFun = "propInFun"
+        console.log("in fun", this, this.propFromThis, this.outVar);
+    }
+
+    _fieldName = 0;
+    get fieldName() {
+        console.log("getting fieldName ", this._fieldName);
+        return this._fieldName;
+    }
+
+    set fieldName(val) {
+        this._fieldName = val;
+        console.log("setting ", this._fieldName);
+    }
+
+    #realPrivateValue = "realPrivateValue" // prefxied with # is not implemented in browser yet.
+    get realPrivateValue() {
+        return this.#realPrivateValue;
+    }
+
+    static myStaticFun() {
+        console.log("in static fun.", "'this' is the class itself", this);
+    }
+}
+
+class AnotherObject {
+}
+
+let a1 = new Animal();
+a1.fun1();
+a1.fieldName = "somevalue"
+console.log(a1.fieldName);
+console.log(a1._fieldName); // can access it but just a convention not to use it from outside
+// console.log(a1.#realPrivateValue); // cannot access private field
+console.log(a1.realPrivateValue);
+
+// losing of this.
+let x = a1.fun1;
+// x(); // error because of lossing reference of "this" and "this == undefined"
+
+
+// changing of this
+let ao1 = new AnotherObject();
+ao1.someFun = a1.fun1;
+ao1.someFun(); // "this got changed, now pointing to "AnotherObject". Becuase this is evaluated from "." 
+// https://javascript.info/reference-type#reference-type-explained
+
+
+// to understand static method
+// console.log(Animal.fun1()) error
+console.log(Animal.fun1) // undefined
+Animal.myStaticFun(); // works
+
+
+</script>
+
+</body>
+</html>
