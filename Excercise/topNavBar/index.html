@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu bar</title>
+</head>
+
+<style>
+    .parent {
+        position: relative;
+        display: inline-block;
+    }
+
+    .child {
+        position: absolute;
+        display: none;
+    }
+
+    .parent:hover > .child {
+        display: block;
+        
+    }
+
+    .parent .parent .child {
+        top: 0;
+        left: 100%;
+    }
+
+    .label {
+        border: 1px solid black;
+        padding: 4px;
+    }
+
+    .parent .parent {
+        display: block;
+    }
+</style>
+
+<body>
+    <nav>
+        <div class="parent">
+            <div class="label">menu1</div>
+            <div class="child">
+                <div class="parent">
+                    <div class="label">submenu1</div>
+                    <div class="child">
+                        <div class="label">menu1</div>
+                        <div class="parent">
+                            <div class="label">subSubMenu</div>
+                            <div class="child">
+                                <div class="label">menu1</div>
+                                <div class="label">menu1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="parent">
+                    <div class="label">menu1</div>
+                    <div class="child">
+                        <div class="label">menu1</div>
+                        <div class="label">menu1</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="parent">
+            <div class="label">menu1</div>
+            <div class="child">
+                <div class="label">menu1</div>
+                <div class="parent">
+                    <div class="label">menu1</div>
+                    <div class="child">
+                        <div class="label">menu1</div>
+                        <div class="label">menu1</div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </nav>
+
+    <br>
+    <br>
+    <br>
+
+    <nav id="autoNav"></nav>
+
+    <script>
+        
+
+    </script>
+
+</body>
+</html>

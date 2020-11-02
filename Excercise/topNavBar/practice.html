@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .nav-bar {
+        display:  flex;
+    }
+
+    .dropdownContainer {
+        position: relative;
+    }
+
+    .dropdownMenu {
+        position: absolute;
+        display: none;
+    }
+
+    .dropdownContainer:hover > .dropdownMenu {
+        display: block;
+    }
+
+    .dropdownContainer .dropdownContainer .dropdownMenu {
+        top: 0;
+        left: 100%
+    }
+
+    .label {
+        white-space: nowrap;
+        border: 1px solid gray;
+        padding: 4px;
+    }
+</style>
+
+<body>
+    <nav class="nav-bar">
+        <div class="dropdownContainer">
+            <div class="label">item1</div>
+
+            <div class="dropdownMenu">
+                <div class="label">item1-child1 sfds sdfsdf sfdsdf</div>
+                <div class="dropdownContainer">
+                    <div class="label">item1-child2</div>
+                    <div class="dropdownMenu">
+                        <div class="label">item1-child2-child1</div>
+                        <div class="label">item1-child2-child2</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- because of this line break there is gap in the items -->
+        <div class="dropdownContainer">    
+            <div class="label">item2</div>
+            <div class="dropdownMenu">
+
+                <div class="dropdownContainer">
+                    <div class="label">item2-child2</div>
+                    <div class="dropdownMenu">
+                        <div class="label">item2-child2-child1</div>
+                        <div class="label">item2-child2-child2</div>
+                    </div>
+                </div>
+                <div class="label">item2-child1</div>
+                
+            </div>
+        </div>
+    </nav>
+
+    <br>
+    <br>
+    <br>
+
+    <nav class="nav-bar" id="myNav"></nav>
+
+    <script>
+        const config = {
+            navs: [{
+                    label: "item1",
+                    navUrl: "/",
+                    children: [{
+                        label: "item1-child1 sfds sdfsdf sfdsdf"
+                    },{
+                        label: "item1-child2",
+                        children: [{
+                            label: "item1-child2-child1"
+                        },{
+                            label: "item1-child2-child2"
+                        }]
+                    }]
+                },{
+                    label: "item2",
+                    children: [{
+                        label: "item2-child1 sdf  sd f sdf s df s df sd f sdf sdf sdf"
+                    },{
+                        label: "item2-child2",
+                        children: [{
+                            label: "item2-child2-child1"
+                        },{
+                            label: "item2-child2-child2 saf fsdf  sdf sdf sdf sdf sdf",
+                            children: [{
+                                label: "item2-child2-child2-child1"
+                            },{
+                                label: "item2-child2-child2-child2"
+                            }]
+                        }]
+                    }]
+                }
+            ]
+        };
+
+        let rootNav = document.getElementById("myNav");
+        const fragment = new DocumentFragment();
+        addNav(fragment, config.navs);
+        rootNav.append(fragment);        
+        function addNav(currentNode, currConfig) {
+            for (let i of currConfig) {
+                const container = document.createElement("div");
+                container.classList.add("dropdownContainer");
+                currentNode.append(container);
+                
+                const label = document.createElement("div");
+                label.classList.add("label");
+                label.innerText = i.label;
+                container.append(label);
+
+                label.onclick = () => {
+                    location.href = i.navUrl
+                }
+
+                const menu = document.createElement("div");
+                menu.classList.add("dropdownMenu");
+                container.append(menu);
+
+                if (i.children && i.children.length > 0) {
+                    addNav(menu, i.children);
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
