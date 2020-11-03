@@ -1,0 +1,13 @@
+perfOptimization_notes_1
+
+from https://www.udacity.com/course/browser-rendering-optimization--ud860
+https://developers.google.com/web/fundamentals/performance/rendering
+
+# DOM + COM = Render tree
+	https://classroom.udacity.com/courses/ud860/lessons/4138328558/concepts/41560785650923
+	
+# How images/pixels are drawn 
+	https://classroom.udacity.com/courses/ud860/lessons/4138328558/concepts/41677185820923
+
+# layout and paint
+	https://classroom.udacity.com/courses/ud860/lessons/4138328558/concepts/41373290750923
