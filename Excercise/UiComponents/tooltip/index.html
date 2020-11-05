@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .container {
+        border: 1px solid red;
+        height: 50px;
+        width: 200px;
+        overflow: hidden;
+    }
+
+    .tooltip-target {
+        cursor: pointer;
+        position: absolute;
+    }
+
+    .tooltip-target > * {
+        cursor: pointer;
+    }
+    .tooltip {
+        position: relative;
+        border: 1px solid green;
+        display: block;
+        background: white;
+        /*
+        top,left,right,bottom is by default auto which will keep it at static position
+        */
+    }
+    .tooltip-target:hover .tooltip {
+        display: block;
+    }
+</style>
+
+<body>
+    
+<div class="container">
+    <div class="tooltip-target">
+        <div>target text/html</div>
+        <div class="tooltip" style="top: auto">
+            <div>line1line1line1line1line1line1line1line1</div>
+            <div>line1</div>
+            <div>line1</div>
+        </div>
+    </div>
+</div>
+
+<div class="container" style="margin-left: 400px;">
+    <div class="tooltip-target" style="margin-left: 20px;">
+        <div>target text/html</div>
+        <div class="tooltip">
+            <div>line1</div>
+            <div>line1line1line1line1line1line1line1line1</div>
+            <div>line1</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="tooltip-target" style="margin-top: 100px; border: 1px solid red; display: inline-block;">
+    <div>target text/html</div>
+    <div class="tooltip" style="top: auto">
+        <div>line1</div>
+        <div>line1</div>
+        <div>line1</div>
+    </div>
+</div>
+
+</body>
+</html>
