@@ -36,19 +36,19 @@ Leaders are owners. They think long term and don’t sacrifice long-term value f
 
 Amazon Leadership Principles Interview Questions Examples:
 Tell me about a time when you had to make a difficult short term decision to make long term gains.
-Tell me about a time when you had to work on a project with unclear responsibilities.
-Tell me about a time when you had to leave a task unfinished.
-Tell me about a time when you took on a task that went beyond your normal responsibilities.
-Tell me about a time when you took it upon yourself to work on a challenging initiative.
+Tell me about a time when you had to work on a project with unclear responsibilities.	- telemetry
+Tell me about a time when you had to leave a task unfinished. - setup new repo for eum
+Tell me about a time when you took on a task that went beyond your normal responsibilities. - building backend, writing sql and develop ui.
+Tell me about a time when you took it upon yourself to work on a challenging initiative. - setup new repo for eum
 Invent and Simplify
 Leaders expect and require innovation and invention from their teams and always find ways to simplify. They are externally aware, look for new ideas from everywhere, and are not limited by “not invented here”. As we do new things, we accept that we may be misunderstood for long periods of time.
 
 Amazon Leadership Principles Interview Questions Examples:
-Tell me about a time when you failed to simplify a process and what you would have done differently.
-Tell me about a time when you innovated on something and it went wrong.
-Tell me about a time when you changed a process at work through either an innovative new way or simplification.
-Tell me about a time when you invented something.
-Tell me about a time when you gave a simple solution to a complex problem.
+Tell me about a time when you failed to simplify a process and what you would have done differently. - build a grid by myself without using a library.
+Tell me about a time when you innovated on something and it went wrong. - building a grid library by my own
+Tell me about a time when you changed a process at work through either an innovative new way or simplification. - faster code review with cohort of three
+Tell me about a time when you invented something.	- prefix tree for path based journey.
+Tell me about a time when you gave a simple solution to a complex problem. - modulo solution for finding window.
 Are Right, A Lot
 Leaders are right a lot. They have strong judgment and good instincts. They seek diverse perspectives and work to disconfirm their beliefs.
 
@@ -56,7 +56,7 @@ Amazon Leadership Principles Interview Questions Examples:
 Tell me about a time when you had to work with incomplete data or information.
 Tell me about a time when you were wrong.
 Tell me about a time when you had to use your judgment to solve a problem.
-Tell me about a time when you incorporated a diverse set of perspectives into solving a problem.
+Tell me about a time when you incorporated a diverse set of perspectives into solving a problem. User journey, made demo of directed graph UI, hierarchical tree UI, Dagree (Dag Tree UI)
 Tell me about a time when you had your beliefs challenged and how you responded.
 Learn and Be Curious
 Leaders are never done learning and always seek to improve themselves. They are curious about new possibilities and act to explore them.
@@ -69,6 +69,7 @@ Tell me about a time when your curiosity helped you make a smarter decision.
 Tell me about the most important lesson you learned in the past year.
 Hire and Develop the Best
 Leaders raise the performance bar with every hire and promotion. They recognize exceptional talent, and willingly move them throughout the organization. Leaders develop leaders and take seriously their role in coaching others. We work on behalf of our people to invent mechanisms for development like Career Choice.
+- 
 
 Amazon Leadership Principles Interview Questions Examples:
 Tell me about a time when you made a wrong hire. When did you figure it out and what did you do?
@@ -84,7 +85,7 @@ Tell me about a time when a team member didn’t meet your expectations on a pro
 Tell me about a time when you couldn’t meet your own expectations on a project.
 Tell me about a time when you raised the bar.
 Tell me about a time when you motivated a team to go above and beyond.
-Tell me about a time when you were dissatisfied with the quality of something at work and went out of your way to improve it.
+Tell me about a time when you were dissatisfied with the quality of something at work and went out of your way to improve it. - writing java unit test doc, it was very popular in our team.
 Think Big
 Thinking small is a self-fulfilling prophecy. Leaders create and communicate a bold direction that inspires results. They think differently and look around corners for ways to serve customers.
 
@@ -116,7 +117,7 @@ Earn Trust
 Leaders listen attentively, speak candidly, and treat others respectfully. They are vocally self-critical, even when doing so is awkward or embarrassing. Leaders do not believe their or their team’s body odor smells of perfume. They benchmark themselves and their teams against the best.
 
 Amazon Leadership Principles Interview Questions Examples:
-Tell me about a time when you had to tell someone a harsh truth.
+Tell me about a time when you had to tell someone a harsh truth. - Conflict with PR review (co author for my team mate)
 What would you do if you found out that your closest friend at work was stealing?
 What is the quality you value least about yourself?
 What do you do to gain the trust of your teammates?

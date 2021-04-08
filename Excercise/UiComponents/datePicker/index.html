@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    .my-date-picker-container {
+        position: relative;
+    }
+
+    .my-date-picker-overlay {
+        position: absolute;
+        display: none;
+    }
+
+    .parent-div {
+        border: 1px solid green;
+        width: 400px;
+        height: 600px;
+    }
+
+</style>
+
+<body>
+    <div class="parent-div">
+        <div class="my-date-picker-container" role="my-date-picker">
+            <input class="my-date-picker-input">
+            <div class="my-date-picker-overlay"></div>
+        </div>
+    </div>
+    
+    
+    <script type="module" src="main.js"></script>
+</body>
+</html>

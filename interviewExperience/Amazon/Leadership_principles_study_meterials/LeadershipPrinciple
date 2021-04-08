@@ -13,6 +13,8 @@ Stories for Leadership Principle-
 
 1. Customer Obsession
 story-1:
+Was debugging a license issue, couldn't find the root cause but found customer updated the version, so I could close the the ticket but I was till looking for the root cause 
+Todo - Find out the issue more
 
 story-2:
 
@@ -28,21 +30,23 @@ When I moved to another team I seemlessly handed over all knowladge and responsi
 
 ================================================
 3. Invent and Simplify
-	story-1: Convertin direct graph to a tree in user journey project - 
+	story-1: Converting direct graph to a tree in user journey project - 
 
 story-2:
 
 ================================================
 4. Are Right, A Lot
-story-1:
+story-1: sometimes I am wrong 
 
 story-2:
 
 ================================================
 5. Learn and Be Curious
 story-1:
+I learned D3 for my project. Explored D3 force to directed graph.
 
 story-2:
+Angular 2-6 jump for a new project.
 
 ================================================
 6. Hire and Develop the Best
@@ -97,3 +101,45 @@ story-2:
 story-1:
 
 story-2:
+
+
+================================================
+Random story
+
+Missed my deadline while working with timezone
+Job scheduler, Now user can pick a timezone with time range.
+
+Implemented angular 6 from from angular 1 for my product area.
+
+When I was wrong - 
+I build a grid library by my own thinking.
+
+PR review conflict :- PR description was not unto the mark, I updated the PR for my team mate
+But on of the reviewer said I cannot do the author has to do that. Why can't there be co author
+For a PR.
+
+Graph VS tree discussion for ExJM - 
+Backend api return directed graph. UX wants tree like view.
+Then I proposed a tacky solution
+
+Complete path ExJM - 
+Explain existing ExJM issue in details wiki, build a POC solution for PM and UX people to play with.
+I went extra steps to convince the PM and UX folks that my design is much better than the existing solution.
+And MY solution is based on idea which is completely different from how they are thinking. I wrote two sample
+input that results into wrong data.
+
+Customer bug root cause not found, But I went to look for the build version that had the issue
+
+Customer field trip for Synthetic job editor modal.
+It was just file upload before. I added a code editor (code mirror library)
+
+Converting to Flash
+I never saw code in flash. There was some old UI screens built in flash. My manager was asking if I could
+Convert that to html. The original PM and dev for that screen has long gone from the company. I knew it was
+Gong to be a painful to go through the flash code. initially I didn't want to take but I when learn these were
+The last screens in flash and removing those we can complete remove flash from our app, then I saw some value
+And that motivated me. Then I did the project.
+
+Readonly users can run ADQL query.
+
+Missed a bug in while testing during regression.
