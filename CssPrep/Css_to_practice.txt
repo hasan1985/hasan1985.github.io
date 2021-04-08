@@ -1,0 +1,8 @@
+Css to practice - 
+
+1. tooltip positions - done
+2. flex box
+3. css grid
+4. media query
+5. responsive design
+6. animation

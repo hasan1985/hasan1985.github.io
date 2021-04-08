@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    .target {
+        height: 100px;
+        width: 100px;
+        margin: 10px 10px;
+    }
+
+    .tooltip {
+        position: absolute;
+        display: none;
+    }
+
+    .tooltip-content {
+        width: 200px;
+        height: 200px;
+        border: 1px solid black;
+    }
+
+    .border {
+        border: 1px solid black;
+    }
+
+    .cuttOffSection {
+        overflow: hidden;
+        height: 200px;
+        width: 150px;
+        margin: 100px 100px;
+    }
+</style>
+
+<body>
+    <div class="cuttOffSection border">
+        <div>preblock</div>
+        <div class="target border" onmouseenter="showTooltip(this, 'tooltip1')">
+            target
+        </div>
+        <div class="tooltip" id="tooltip1">
+            <div class="tooltip-content">
+                hi from tooltip
+            </div>
+        </div>
+        <div>next</div>
+    </div>
+
+    <script>
+        function showTooltip(target, tooltipId) {
+
+            if (target.hasTooltip) {
+                clearTimeout(target.timeout);
+                return
+            }
+
+            console.log(target.getBoundingClientRect(), tooltipId);
+            const bb = target.getBoundingClientRect();
+            let tooltipElem = document.getElementById(tooltipId);
+            let copyElem = tooltipElem.cloneNode(true);
+            document.body.append(copyElem);
+            copyElem.style.display = "block";
+            copyElem.style.position = "absolute";
+            copyElem.style.top = bb.bottom+"px";
+            copyElem.style.left = bb.left+"px";
+
+            target.hasTooltip = true;
+            target.onmouseout = () => {
+                delayedRemove();
+            }
+
+            copyElem.onmouseenter = () => {
+                clearTimeout(target.timeout);
+            }
+
+            copyElem.onmouseout = () => {
+                delayedRemove();
+            }
+
+            function delayedRemove() {
+                clearTimeout(target.timeout);
+                target.timeout = setTimeout(()=> {
+                    copyElem.remove();
+                    target.hasTooltip = false;
+                }, 500);
+            }
+        }
+    </script>
+
+</body>
+</html>

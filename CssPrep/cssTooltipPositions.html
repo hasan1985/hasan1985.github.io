@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+
+.page {
+    width: 1000px;
+    height: 1000px;
+}
+
+
+.innerElement {
+    width: 100%;
+    height: 100%;
+}
+
+.target {
+    width: 100px;
+    height: 100px;
+    margin: 20px 20px;
+
+    /* position: absolute will break the flow 
+    i.e. previous or next sibling will overlap with target for absolute pos*/
+    position: relative; 
+}
+
+.tooltip {
+    position: absolute;
+    display: none;
+
+    background-color: white;
+    border: 1px solid red;
+}
+
+.target:hover .tooltip {
+    display: block;
+}
+
+.tooltip-top {
+    left: 50%; /* align tooltip TL corner to x-axis center of the target*/
+    bottom: 100%; /* to push the tooltip at the top*/
+
+    /* now x=-50% will align tooltip's x-center with target's x-center
+    y=10px will it some y-axis padding */
+    transform: translate(-50%, -10px);
+}
+
+.tooltip-bottom {
+    left: 50%; /* align tooltip TL corner to x-axis center of the target*/
+
+    /* now x=-50% will align tooltip's x-center with target's x-center
+    y=10px will it some y-axis padding */
+    transform: translate(-50%, 10px);
+}
+
+.tooltip-right {
+    left: 100%; /*push tooltip all the way to right of the target */
+    top: 50%; /* target's y-center-align with TL corner of the tooltip */
+
+    /* x=10px ll give it some x padding, 
+    y=-50% will align tooltip's y-center to target's y-center */
+    transform: translate(10px, -50%);
+}
+
+.tooltip-left {
+    right: 100%;
+    top: 50%;
+    transform: translate(-10px, -50%);
+}
+
+.tooltip-bottom-right {
+    left: 100%;
+    transform: translate(10px, 10px);
+}
+
+.tooltip-top-right {
+    left: 100%;
+    bottom: 100%;
+    transform: translate(10px, -10px);
+}
+
+.myBorder {
+    border: 1px solid yellow;
+}
+
+.overflowHiddenContainer {
+    height: 420px; 
+    margin: 100px 100px;
+
+    /* overflow: hidden will break the tooltip as some might get cut off
+    to solve this we have to add tooltip to the body and position it around target*/
+    /* overflow: hidden; */ 
+}
+</style>
+
+<body>
+
+    Note- A container with position relative. It will containe a hidden div for tooltip with position
+    absolute. container needs to be relative, can't be absolute because it will break
+    the document flow if position absolute. Then toolip div needs to be absolute positioned
+    because we want it to be out of document flow.
+
+    The container div can have any visible html that will work as tooltip hover target.
+
+    Problem with this appraoch is if container is a descendent of any element that has
+    overflow hidden then it may cut off tooltip div if it appears outside of that element.
+
+    another approach - 
+    don't have any relative position to the wrapper div and only rely on transform translate
+    to position it. It will need js code to nicely position it. Also if any ancestor element
+    have relative position than it might break.
+
+    Solution - To make it resuable we will have to append tooltip div all the way to the body tad and 
+    positioned it around the target element. this is not done here.
+
+<div class="page myBorder">
+    <div class="overflowHiddenContainer myBorder">
+
+        <div>element before target</div>
+
+        <div class="target myBorder">
+            <div class="innerElement myBorder">
+                target
+            </div>
+
+            <div class="tooltip tooltip-top-right">
+                <div style="min-width: 70px; min-height: 40px; text-align: center;">
+                    tooltips top right
+                </div>
+            </div>
+
+            <div class="tooltip tooltip-bottom">
+                <div style="width: 70px; min-height: 40px; text-align: center;">
+                    tooltips bottom
+                </div>
+            </div>
+
+            <div class="tooltip tooltip-top">
+                <div style="width: 70px; min-height: 40px; text-align: center;">
+                    tooltips top
+                </div>
+            </div>
+            
+        </div>
+
+        <div>element next to target</div>
+
+    </div>
+    
+</div>
+
+<script>
+    let containerEle = document.querySelector(".overflowHiddenContainer");
+    setTimeout(() => {
+        containerEle.style.margin = "200px 200px";
+    }, 1000);
+</script>
+
+</body>
+</html>
