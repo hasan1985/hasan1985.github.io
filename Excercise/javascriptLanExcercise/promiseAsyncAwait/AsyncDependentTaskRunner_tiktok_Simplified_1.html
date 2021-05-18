@@ -1,0 +1,108 @@
+<html>
+<pre>
+We want to desing an async task runner where the input is async tasks and their dependencies.
+Each dependendant is also an async task and will have further dependencies.
+This runner should run all the given async tasks to completion in the appropriate order.
+For example here - E should run first, then A and B can run asynchronously, then C can
+start running, then D can start.
+
+     B -- |
+          | -- A
+D -- C -- |
+
+A task object may look like this but you may modify it as per the need of your desing.
+const taskA = {
+    id: 'A',
+    job: () => {
+        setTimeout(() => {
+            console.log('\n ran task A');
+        }, 100);
+    }, 
+    depedencies: [],
+}
+
+Part1 - Design a datastructure where we can keep the tasks and their dependancies.
+Part2 - Write a function that takes that datastructure and run the tasks in order
+
+</pre>
+
+<style>
+</style>
+
+<body>
+<script>
+class Task {
+  constructor(jobName, notifyDependentDoneAndRunCurrent) {
+    this.jobName = jobName;
+    this.notifyDependentDoneAndRunCurrent = notifyDependentDoneAndRunCurrent;
+    this.dependency = [];
+  }
+
+  addDependency(task) {
+    this.dependency.push(task);
+  }
+
+  start() {
+    let dependencyPromises = this.dependency.map(d => d.start());
+    return new Promise((res, rej) => {
+      Promise.all(dependencyPromises)
+        .then(() => {
+          this.notifyDependentDoneAndRunCurrent()
+            .then(() => {
+              console.log(`${this.jobName} done`);
+              res();
+            })
+            .catch(err => {
+              console.log(`${this.jobName} failed`, err.message);
+              res(); // call res if want to ignore the dependency failure
+            });
+        })
+    });
+  }
+}
+
+const A = new Task('A', () => {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      console.log('A is running at ', Date.now());
+      res();
+    }, 1000);
+  });
+});
+
+const B = new Task('B', () => {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      console.log('B is running at ', Date.now());
+      res();
+    }, 1000);
+  });
+});
+
+const C = new Task('C', () => {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      console.log('C is running at ', Date.now());
+      res();
+    }, 1000);
+  });
+});
+
+const D = new Task('D', () => {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      console.log('D is running at ', Date.now());
+      rej(new Error('sorry'));
+    }, 1000);
+  });
+});
+
+C.addDependency(D);
+A.addDependency(B);
+A.addDependency(C);
+
+A.start();
+</script>
+
+</body>
+</html>

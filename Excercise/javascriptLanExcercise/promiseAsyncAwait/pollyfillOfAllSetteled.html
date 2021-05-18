@@ -1,0 +1,53 @@
+<html>
+
+<style>
+body {
+    background-color: black;
+    color: white;    
+}
+
+</style>
+
+<body>
+
+
+<script>
+let p1 = new Promise((res, rej) => {
+  res("p1 resolved");
+});
+
+let p2 = new Promise((res, rej) => {
+  // res("p2 resolved");
+  rej("p2 rejected");
+})
+
+// Promise.all([p1,p2]).then((data) => {
+//   data.forEach(d => console.log(d))
+//   console.log("all done")
+// })
+
+Promise.allSettled([p1,p2]).then((data) => {
+  data.forEach(d => console.log(d))
+  console.log("all done")
+})
+
+Promise.myAllSettled = (promises) => {
+  const convertedPromises = promises.map(promise => {
+    return new Promise((res)=> {
+      promise
+        .then(value => res({status: "fullfilled by me", value: value}))
+        .catch(error => res({status: "rejected by me", reason: error}))
+    })
+  })
+  return Promise.all(convertedPromises);
+}
+
+Promise.myAllSettled([p1,p2]).then((data) => {
+  data.forEach(d => console.log(d))
+  console.log("all done")
+})
+
+</script>
+
+</body>
+</html>
