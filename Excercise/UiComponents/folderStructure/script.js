@@ -4,7 +4,7 @@ const folderMap = new Map();
 const topFolders = [];
 for(let folder of folders) {
     folder.children = [];
-    folder.hideChildrend = false;
+    folder.childrenCollapsed = false;
     folderMap.set(folder.id, folder);
 }
 
@@ -17,27 +17,31 @@ for(let folder of folders) {
 }
 
 const rootElement = document.getElementById("folders");
+addFolders(rootElement, topFolders);
 
-refresh = () => {
-    rootElement.innerHTML = "";
-    addFolders(rootElement, topFolders);
-}
-
-
-addFolders = (parentElement, folders) => {
-    if (!folders || folders.length <=0 ) return;
+function addFolders(parentElement, folders) {
+    if (!folders || folders.length <= 0 ) return;
 
     const ulEle = document.createElement("ul");
     for (let folder of folders) {
-        if (folder.isHidden) continue;
         const li = document.createElement("li");
         const nameTag = document.createTextNode(folder.name);
-        nameTag.onclick = (e) => {
-            e.target.hideChildrend = !e.target.hideChildrend;
-
-        }
         li.appendChild(nameTag);
-        if (!folder.hideChildrend) addFolders(li, folder.children);
+        li.onclick = (e) => {
+            e.stopPropagation();
+            if (folder.children.length > 0) {
+                if (!folder.childrenCollapsed) {
+                    li.querySelector("ul").remove();
+                    folder.childrenCollapsed = true;
+                } else {
+                    addFolders(li, folder.children);
+                    folder.childrenCollapsed = false;
+                }
+            }
+        }
+        if (!folder.childrenCollapsed) {
+            addFolders(li, folder.children);
+        }
         ulEle.appendChild(li);
     }
     parentElement.append(ulEle);
