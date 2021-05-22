@@ -1,0 +1,9 @@
+Accesibility
+1. use HTML sementics, they readable by screen reader
+2. a. test webpage in gray scale, for color blind users. make sure all text and border has enough color contrast
+   b. don't always depends on color like for showing error in red, also show an error icon.
+   c. use color contrast checker
+3. use aria attributes - https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques
+	a. role
+	b. aria-label
+

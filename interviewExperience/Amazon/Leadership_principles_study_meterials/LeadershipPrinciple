@@ -43,7 +43,7 @@ story-2:
 ================================================
 5. Learn and Be Curious
 story-1:
-I learned D3 for my project. Explored D3 force to directed graph.
+I learned D3 for my project. Explored D3 force to draw directed graph. Learned D3 hiararchy 
 
 story-2:
 Angular 2-6 jump for a new project.
@@ -108,6 +108,7 @@ Random story
 
 Missed my deadline while working with timezone
 Job scheduler, Now user can pick a timezone with time range.
+issue - https://stackoverflow.com/a/15171030/3590181
 
 Implemented angular 6 from from angular 1 for my product area.
 
