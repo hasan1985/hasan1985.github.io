@@ -1,0 +1,35 @@
+<html>
+
+<style>
+body {
+    background-color: black;
+    color: white;    
+}
+
+</style>
+
+<body>
+
+<form onsubmit="return false" oninput="o.value = a.valueAsNumber + b.valueAsNumber">
+ <input id=a type=number step=1> +
+ <input id=b type=number step=1> =
+ <output id=o for="a b"></output>
+</form>
+
+<br><br><br><br>
+
+<form action="https://www.google.com/search" method="get">
+    <label>Google: <input type="search" name="q"></label>
+    <input type="submit" value="Search...">
+</form>
+<form action="https://www.bing.com/search" method="get">
+    <label>Bing: <input type="search" name="q"></label> 
+    <input type="submit" value="Search...">
+</form>
+
+<script>
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,131 @@
+<html>
+<style>
+body {
+    background-color: black;
+    color: white;    
+}
+
+</style>
+
+<body>
+
+<script>
+p = (...items) => console.log(...items);
+
+class BatchedApiService {
+	constructor(finalApi, queueDelay) {
+		this.finalApi = finalApi;
+		this.queueDelay = queueDelay;
+		this.batchExecutionCount = 0;
+		this.initBatch();
+	}
+
+	initBatch() {
+		this.requestMapById = new Map();
+		this.timer = null
+	}
+
+	addRqeust(request) { // should have single request id
+		let promise = new Promise((resolve, reject) => {
+			this.requestMapById.set(request.id, {
+				resolve: resolve,
+				reject: reject
+			})
+		});
+		this.startTimer();
+		return promise;
+	}
+
+	startTimer() {
+		if (this.timer == null) {
+			this.timer = setTimeout(() => {
+				this.executeBatch();
+			}, this.queueDelay)
+		}
+	}
+
+	executeBatch() {
+		const requestMapById = this.requestMapById;
+		const batchedRequestObj = {
+			ids: Array.from(this.requestMapById.keys())
+		}
+		
+		this.initBatch();
+
+		this.finalApi(batchedRequestObj).then(responseObj => {
+			responseObj.responsePerRequestId.forEach(res => {
+				const requestObj = requestMapById.get(res.requestId);
+				const responseObj = {
+					requestId: res.requestId,
+					responseData: res.responseData
+				}
+				requestObj.resolve(responseObj);
+			});
+		}).catch(err => {
+			requestMapById.values().foreach(req => {
+				req.reject(err);
+			})
+		}).finally(() => {
+			requestMapById.clear();
+		})
+
+		p("batch exe count: ", ++this.batchExecutionCount);		
+	}
+
+}
+
+const batchedApiService = new BatchedApiService(mockApi, 300);
+
+startConsumer1();
+
+function startConsumer1() {
+	let counter = 0;
+	const interval = setInterval(() => {
+		if (counter >= 5) clearInterval(interval);
+
+// direct calling the mockApi
+//      const requestObj = { 
+// 			ids: ["consumer_1_id: " + counter++] 
+// 		}
+// 		mockApi(requestObj).then((responseObj) => {
+// 			responseObj.responsePerRequestId.forEach(res => {
+// 				p("response data:", res.responseData)
+// 			});
+// 		})
+
+		// calling the mock api through batcher
+        const requestObj = {
+        	id: "consumer_1_id: " + counter++
+        }
+        batchedApiService.addRqeust(requestObj).then(responseObj => {
+        	p("got response for ", responseObj.responseData);
+        })
+        p("requested id", requestObj.id);
+
+	}, 200);
+}
+
+
+let counter = 0;
+function mockApi(requestObj) {
+	const delay = 200;
+	const requestIds = requestObj.ids;
+	p("mockApiExecuted ", ++counter);
+	return new Promise((resolve, reject) => {
+		setTimeout(() => {
+			responseObj = {
+				responsePerRequestId: requestIds.map(id => {
+					return {
+						requestId: id,
+					    responseData: "data for id: " + id
+					}
+				})
+			}
+			resolve(responseObj);
+		}, delay);
+	})
+}
+</script>
+
+</body>
+</html>

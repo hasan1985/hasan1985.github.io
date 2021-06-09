@@ -1,0 +1,72 @@
+<html>
+
+<style>
+body {
+    background-color: black;
+    color: white;    
+}
+
+</style>
+
+<body>
+
+
+<script>
+const p = (...a) => console.log(...a);
+
+// function has this == undefined or window
+function fun() {
+    p(this); // window or undefined
+    p(this.a); //undefined
+}
+fun();
+
+// "method" (function in a object) has "this"
+let obj1 = {
+    a: 1,
+    fun_b: function() {
+        console.log("function fun_b as a method")
+        console.log("has a property ", this.a);
+    },
+    fun_c() { // shorthand for method
+        console.log("function fun_c as a method");   
+        console.log("has a property ", this.a); // method has this ("this" is the object "before dot")
+    }
+}
+obj1.fun_b();
+obj1.fun_c();
+obj1.fun_d = function() {console.log("in func_d", this.a)} // this is also a method, will have this.
+obj1.fun_d();
+
+let funWithOutThis = obj1.fun_c;
+console.log("calling funWithOutThis");
+funWithOutThis(); // this is undefined
+funWithOutThis.call(obj1) // now this === obj1
+
+// task - https://javascript.info/object-methods#using-this-in-object-literal
+
+// function as object constructor
+function MyObject() {
+    console.log("constructor function", this);
+}
+let myObject = new MyObject(); // prints "MyObject" for "this"
+console.log(myObject); // // prints "MyObject"
+MyObject(); // called just a regular fun, it prints "Window" for "this"
+// when we use "new" before calling a function is acts as object constructor where "this"
+// is referred to the new constructed object and it is returned. So a function for 
+// constructor should not return anything. 
+
+// some example - https://javascript.info/constructor-new#constructor-function
+
+// If constructor function returns something then we will not be able
+// to point to the newly constructed object.
+// https://javascript.info/constructor-new#return-from-constructors
+
+// //Omitting parentheses
+let user = new MyObject; // <-- no parentheses same as let myObject = new MyObject();
+
+
+</script>
+
+</body>
+</html>

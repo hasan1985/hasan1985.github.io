@@ -1,0 +1,108 @@
+<html>
+
+<style>
+body {
+    background-color: black;
+    color: white;    
+}
+</style>
+
+<body>
+
+
+<!-- here "return false" is a hack to prevent form submit i.e. URL change -->
+<form name="form_1" onsubmit="submitForm(); return false;"> 
+    <div>
+        <!-- 
+            lable is not form associated elements - https://html.spec.whatwg.org/multipage/forms.html#form-associated-element 
+            also look this - https://www.w3schools.com/html/html_form_elements.asp 
+        -->
+        <label for="firstName_id">First Name</label>
+        <input id="firstName_id" type="text" name="firstName_form_element">
+    </div>
+    <div>
+        <!-- diff way, no need for->id -->
+        <label>
+            Last Name <input type="text" name="lastName_form_element">
+        </label>
+    </div>
+    <div>
+        <lable>
+            Date <input type="date" name="data_form_element">
+        </label>
+    </div>
+    <div>
+        <label>
+            Month <input type="month" name="month_element"> 
+        </label>
+    </div>
+    <div>
+        <label>
+            Week <input type="week" name="my_week">
+        </label>
+    </div>
+    <div>
+        <label>
+            color: <input type="color" name="my_color">
+        </label>
+    </div>
+    <div>
+        <label>
+            number: <input type="number" name="my_n">
+        </label>
+    </div>
+    <div>
+        <label>
+            email: <input type="email" name="my_email">
+        </label>
+    </div>
+    <div>
+        <label>
+            password: <input type="password" name="my_password">
+        </label>
+    </div>
+    <div>
+        <label>
+            tel: <input type="tel" name="my_tel" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">
+        </label>
+    </div>
+    <div>
+        <label>
+            checkbox: <input type="checkbox" name="my_cb" value="checkbox_value_1">
+        </label>
+    </div>
+    <div>
+        <label>
+            checkbox multiple: <input type="checkbox" name="my_cb_multi" value="checkbox_value_1"> <input type="checkbox" name="my_cb_multi" value="checkbox_value_2">
+        </label>
+    </div>
+    <div>
+        <label>
+            radio: <input type="radio" name="my_radio" value="value_1"> <input type="radio" name="my_radio" value="value_2">
+        </label>
+    </div>
+    
+    <input type="submit">
+</form>
+
+<script>
+p = (...a) => console.log(...a);
+
+function submitForm() {
+    console.log("submitted");
+    let form1 = document.forms.form_1
+
+    p("first name ", form1.firstName_form_element.value);
+    p("last name", form1.lastName_form_element.value);
+    p("color", form1.my_color.value);
+    p("password", form1.my_password.value);
+    p("tel", form1.my_tel.value);
+    p("checkbox", form1.my_cb.checked, form1.my_cb.value);
+    p("checkbox multiple", Array.from(form1.my_cb_multi).filter(i => i.checked).map(i => i.value));
+    p("radio", form1.my_radio.value);
+}
+
+</script>
+
+</body>
+</html>

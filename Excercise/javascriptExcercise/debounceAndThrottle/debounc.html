@@ -8,7 +8,12 @@ body {
 </style>
 
 <body>
+<a href="https://www.telerik.com/blogs/debouncing-and-throttling-in-javascript" target="_blank">https://www.telerik.com/blogs/debouncing-and-throttling-in-javascript</a>
+Main different between throttling and debounce is that debounce needs to be stop firing event (cooling period) and stay cool for a given time before the given function is executed.
+If the event never stops firing the function will never execute.
+Throttling will execute the given function after the wait time even if the event is still being fired.
 
+<a href="https://gist.github.com/beaucharman/1f93fdd7c72860736643d1ab274fee1a">good discussion about context binding</a>
 
 <script>
 // because of it "this" will not point to global object (Window) inside a function execution by default
