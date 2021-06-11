@@ -1,0 +1,54 @@
+<html>
+
+<style>
+body {
+    background-color: black;
+    color: white;    
+}
+
+</style>
+
+<body>
+
+
+<script>
+Array.prototype.getOddEvenIterator = function(odd = false) {
+    const array = this;
+    return { // returns object containing iterator symbol
+        [Symbol.iterator]: function() {
+            return { // returns object containing next function
+                currentIndex: odd ? 1 : 0,
+                next() {
+                    if (this.currentIndex < array.length) {
+                        const nextValue = {
+                            done: false,
+                            value: array[this.currentIndex]
+                        }
+                        this.currentIndex+=2;
+                        return nextValue;
+                    } else {
+                        return {
+                            done: true
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+const arr = [0,1,2,3,4,5,6,7,8,9,10];
+
+console.log("evens")
+for (let n of arr.getOddEvenIterator()) {
+    console.log(n);
+}
+console.log("odds")
+for (let n of arr.getOddEvenIterator(true)) {
+    console.log(n);
+}
+
+</script>
+
+</body>
+</html>

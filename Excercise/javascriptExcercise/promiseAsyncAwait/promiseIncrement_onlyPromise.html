@@ -37,6 +37,52 @@ myCounter().then(i => console.log(i));
 myCounter().then(i => console.log(i));
 myCounter().then(i => console.log(i));	
 
+
+
+// got better - 
+function getCounter(init, fun, max) {
+	// no array is actually needed since only latest is needed
+	// saving the lastPromise in a closure
+    let lastPromise = Promise.resolve(init); 
+    
+    return function() {
+        const prevPromise = lastPromise;
+                
+        const newPromise = new Promise(res => {
+            lastPromise.then(data => {
+                if (data == max) {
+                	return Promise.resolve(max);
+                } else {
+                	return fun(data);
+                }
+            }).then(data => {
+                res(data);
+            })            
+        });
+
+        // short hand, even better
+//         const newPromise = prevPromise.then(data => {
+//             if (data === max) {
+//                 return Promise.resolve(max);
+//             } else {
+//                 return fun(data);   
+//             }
+//         })
+
+        lastPromise = newPromise;
+        return newPromise;
+
+        /* much more shorter just doing this will work
+        lastPromise = lastPromise.then(data => {
+            return data === max ? Promise.resolve(max) : fun(data);
+        })
+        return lastPromise;        
+        */
+    }
+}
+
+
+
 </script>
 
 </body>

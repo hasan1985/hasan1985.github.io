@@ -1,0 +1,72 @@
+<html>
+
+<style>
+body {
+    background-color: black;
+    color: white;    
+}
+
+</style>
+
+<body>
+
+
+<script>
+function delayedIncreament(val) {
+    return new Promise(res => {
+        setTimeout(() => res(val+1), 200)
+    });
+}
+
+function getCounter(init, fun, max) {
+    let lastPromise = Promise.resolve(init); // saving the lastPromise in a closure
+    return function() {
+        const prevPromise = lastPromise;
+
+//         const newPromise = new Promise(res => {
+//             lastPromise.then(data => {
+//                 if (data < max) {
+//                     return fun(data);    
+//                 } else {
+//                     return Promise.resolve(max);
+//                 }
+//             }).then(data => {
+//                 res(data);
+//             })            
+//         });
+
+        // short hand
+        const newPromise = prevPromise.then(data => {
+            if (data === max) {
+                return Promise.resolve(max);
+            } else {
+                return fun(data);   
+            }
+        });
+        lastPromise = newPromise;
+
+        return newPromise;
+
+        /* much more shorter
+        lastPromise = lastPromise.then(data => {
+            return data === max ? Promise.resolve(max) : fun(data);
+        })
+        return lastPromise;        
+        */
+        
+    }
+}
+
+const counter = getCounter(0, delayedIncreament, 5);
+counter().then(data => console.log(Date.now(), data));
+counter().then(data => console.log(Date.now(), data));
+counter().then(data => console.log(Date.now(), data));
+counter().then(data => console.log(Date.now(), data));
+counter().then(data => console.log(Date.now(), data));
+counter().then(data => console.log(Date.now(), data));
+counter().then(data => console.log(Date.now(), data));
+
+</script>
+
+</body>
+</html>
