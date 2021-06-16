@@ -1,0 +1,96 @@
+<html>
+
+<style>
+body {
+    background-color: black;
+    color: white;    
+}
+
+</style>
+
+<body>
+
+
+<script>
+const cl = (...a) => console.log(...a);
+const cd = (...a) => console.dir(...a);
+
+// its kind of messy to do inheritance with prototype chain
+
+function Person(name) {
+    console.log("constructing Person");
+    this.type = "Person";
+    this.isPerson = true;
+    this.name = name;
+}
+Person.prototype.isPersonFun = function() {
+    return true;
+}
+Person.prototype.print = function(){
+    console.log("is Person:", this.isPerson, "Name:", this.name);
+}
+
+function Employee(name, empId) {
+    Person.call(this, name);
+    
+    console.log("constructing Employee")
+
+    this.type = "Employee";
+    this.isEmployee = true;
+    this.empId = empId;
+}
+Employee.prototype.isEmployeeFun = function() {
+    return true;
+};
+Employee.prototype.print = function() {
+    this.super.print.call(this);
+    console.log("is Employee:", this.isEmployee, "empId", this.empId); // full override
+};
+Employee.prototype = Object.assign({}, Person.prototype, Employee.prototype); // don't change Person.prototype
+Employee.prototype.super = Object.assign({}, Person.prototype);
+const john = new Employee("John", 10);
+console.log("john.isPersonFun()", john.isPersonFun())
+console.log("john.isEmployeeFun()", john.isEmployeeFun())
+console.log("type", john.type)
+john.print();
+
+// here we have lot of things can go wrong.
+// we cannot pass Employee.prototype.print as a function to other object. it will break "this"
+// how to do private and protected access controll?
+
+
+// js class
+class PersonKlass {
+    constructor() {
+        this.isPerson = true;
+        this.type = "Person"
+    }
+
+    print() {
+        console.log("this is a person, name:", this.name);
+    }    
+}
+
+class EmployeeKlass extends PersonKlass {
+    constructor(name, id) {
+        super();
+        this.name = name;
+        this.isEmployee = true;
+        this.type = "Employee";
+        this.empId = id;
+    }
+
+    print() {
+        super.print();
+        console.log("this is an employee, epmId", this.empId);
+    }
+}
+
+const jane = new EmployeeKlass("Jane", 10);
+console.log("Object type:", jane.type);
+console.log("Emp name:", jane.name);
+jane.print();
+</script>
+
+</body>
+</html>

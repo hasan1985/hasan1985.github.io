@@ -1,0 +1,53 @@
+<html>
+
+<style>
+body {
+    background-color: black;
+    color: white;    
+}
+
+</style>
+
+<body>
+<script>
+'use strict';
+
+function throttle(callback, delay) {
+    let blocked = false;
+    return function(...arg) {
+        if (!blocked) {
+            blocked = true;
+            callback.call(this, ...arg);
+            setTimeout(() => blocked = false, delay);
+        }
+    }
+}
+
+const obj1 = {
+    name: "obj1",
+    func(param) {
+        console.log(this.name, param);
+    }
+}
+
+obj1.throttleFunc = throttle(obj1.func, 99); // " 'this/context' inside the method" == "object before dot"
+let bindOnDebounce = throttle(obj1.func, 99).bind(obj1); // bind context to returned function from throttle
+let debounceOnBoundFunc = throttle(obj1.func.bind(obj1), 99); // bind context to the callback function
+let fatArrow = throttle((param) => obj1.func(param), 99); // keep current context which has access to obj1
+let unboundFunc = throttle(obj1.func, 99);  // context is undefined
+
+let count = 0;
+const interval = setInterval(() => {
+    if (count == 10) clearInterval(interval);
+        //obj1.throttleFunc(count); // works
+        //unboundFunc(count); // error, no context found
+        //debounceOnBoundFunc(count); // works
+        //bindOnDebounce(count);    // works
+        //fatArrow(count);    // works
+    count++;
+}, 50)
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+<html>
+
+<style>
+body {
+    background-color: black;
+    color: white;    
+}
+
+</style>
+
+<body>
+
+
+<script>
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+// functions keeps a copy of accessible value in its closure/scope while going through its defination phase (not during execution)
+// later example shows this understanding is slightly wrong
+let obj2 = {
+    callbacks: [],
+    setCallback(callback, ...param) {
+        function f() {
+            callback(...param);
+        }
+
+        this.callbacks.push(f);
+    },
+    exeAllCallbacks() {
+        this.callbacks.forEach((callback) => {
+            callback(); // set debugger here and look [[Scopes]].
+            // it shows each of the calback has the value of param from the time of its setting.
+        });
+    }
+}
+
+function fun1(...param) {
+    console.log("fun1", ...param);
+}
+
+function fun2(...param) {
+    console.log("fun2", ...param);
+}
+obj2.setCallback(fun1, 11, 111);
+obj2.setCallback(fun1, 12);
+obj2.setCallback(fun1, 13);
+obj2.setCallback(fun2, 1);
+obj2.setCallback(fun2, 2);
+obj2.exeAllCallbacks();
+
+
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+// correction - 
+// 1. Each execution block has a closure.
+// 2. A function (function object) is build or constructed through some code execution.
+// 3. That execution has it's closure. Remember function is a object which is created like any other object.
+// 4. What different about function is it can be excutable and during that execution it will have access to
+// the closure or chain of closure that was there during its craation.
+// 5. If multiple functions are created by multiple exection of same line of codes, even then, 
+// each execution will have a separate context and created functions will point to its associated closure
+function getFunWithClosure(param1, param2) {
+    function f() {
+        return param1;
+    }                    // l3
+    param1 = param2;     // l4
+    return f;
+}
+const fwc1 = getFunWithClosure(10, 100); // l1
+console.log(fwc1());                    // l5
+
+const fwc2 = getFunWithClosure(20, 200); // l2
+console.log(fwc2());            // l6
+
+/*
+l1 and l2 will create two contexts, lets say c1 and c2.
+at line l3 - 
+for c1 param1 = 10 and param2 = 100
+for c2 param1 = 20 and param2 = 200
+at line l4
+param1 got changed in both c1 and c2
+now at
+at l5 function fwc1 goes to context c1 for param1 which is 100 now
+at l6 function fwc2 goes to context c2 for param1 which is 200 now
+so function keeps a list of closure whos variable is used but it.
+*/
+
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+// confusing part - 
+// premitive values are copied to closure
+// but object are not deep copied to closure
+// example - 
+function getFunWithClosureForObj(premitivePram, objectParam) {
+    function f() {
+        return [premitivePram, Object.values(objectParam)];
+    }
+    return f;
+}
+const objParam1 = {a: 100};
+let priPeram1 = 10;
+const fcwo1 = getFunWithClosureForObj(priPeram1, objParam1);
+console.dir(fcwo1());
+param1 = 20;
+objParam1.a = 200;
+console.dir(fcwo1()); // prints old value of param1 but new value of objParam1.a!!!!
+// thats because every code block has it's lexical environment "{...}". 
+// "objParam1.a" is in lexical environment of "objParam1"
+
+////////////////////////////////////////////////////////////////////////////
+// solve these - https://javascript.info/closure#tasks
+
+// try this - https://javascript.info/closure#army-of-functions
+// my solution - https://jsfiddle.net/x06zpa5f/2/
+// also this works - https://jsfiddle.net/x06zpa5f/6/
+
+</script>
+
+</body>
+</html>

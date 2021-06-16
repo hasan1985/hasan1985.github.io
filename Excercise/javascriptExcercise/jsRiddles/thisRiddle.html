@@ -1,0 +1,63 @@
+<html>
+
+<style>
+body {
+    background-color: black;
+    color: white;    
+}
+
+</style>
+
+<body>
+
+<script>
+"use strict";
+function fun() {
+    console.log(this);
+}
+// fun(); // prints undefined
+// new fun(); // prints current function object
+// main purpose of "new" is to create an object and assign it to "this"
+// ie. create a context for the function. This is how function is used for object constructor
+
+const aObj = {}
+aObj.aMethod = fun;
+// aObj.aMethod(); // it prints the aObj as this. rem "object before dot" is the context/this
+// aObj["aMethod"]() // works too, [] is same as "."/dot hence it also works as "object before dot"
+
+let objKeys = Object.keys(aObj);
+// console.log(objKeys);
+// aObj[ objKeys[0] ](); // works too
+
+// riddle - 
+function printLength() {
+    console.log(this.length);
+}
+const bObj = {
+    length: 5,
+    method() {
+        arguments[0](); // => arguments.0() => Array.0() => based on "this == object before ." this.length => Array.length => arguments.length => 2
+    },
+    method2() {
+        this.fun = arguments[0];
+        this.fun(); // based on "this is object before ." this.length => bObj.length => 5
+    }  
+}
+bObj.method(printLength, 1); // 2
+bObj.method2(printLength, 1); // based on "this == object before ." this.length => bObj.length => 5
+
+
+</script>
+
+<script>
+function fun() {
+    console.log(this); // global ie window object
+}
+// fun();
+// new fun(); // prints current function object
+
+
+</script>
+
+</body>
+</html>

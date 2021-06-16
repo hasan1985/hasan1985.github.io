@@ -1,0 +1,54 @@
+<html>
+
+<style>
+body {
+    background-color: black;
+    color: white;    
+}
+
+</style>
+
+<body>
+
+
+<script>
+let arr = [1,2,"sdf",4,"r"];
+// console.log(typeof arr); // object
+// console.log(Array.isArray(arr)); // true
+// console.log(Array.isArray({})); // false
+
+let x = [1,2,"sdf",4,"r"].toString() + " some more string";
+// console.log(x); // 1,2,sdf,4,r some more string
+// console.log(typeof x) // "string"
+
+let arrConcateWithPlus = [1,2] + [3,4];
+// console.log(arrConcateWithPlus); // 1,23,4. [1,2] converts to "1,2" and so [3,4] to "3,4". Now "1,2" + "3,4" = "1,23,4"
+// console.log(typeof arrConcateWithPlus); // string
+// console.log([] + [] + []); // empty string
+
+//for object
+// console.log({}.toString()) // [object Object], because any object points to a top object named as "Object" with big "O"
+// console.log({} + {}); //[object Object][object Object]
+// Object.prototype.toString = () => "-hi hi-";
+// console.log({} + {}); // now prints -hi hi--hi hi-
+
+
+//tagged template - riddle
+const val = "10"
+function transform(static, ...tags) {
+    console.log(static);
+    console.log(tags);
+    return "hello"
+}
+// const sentence = transform `hi ${val}`; // backtick string template
+// console.log(sentence);
+
+
+// riddle - 
+const y = "constructor"
+// console.log(y[y](01)); // => "constructor"["constructor](01) => String["constructor"](01) => String.constructor(01) => new String(01) => "1"
+
+</script>
+
+</body>
+</html>

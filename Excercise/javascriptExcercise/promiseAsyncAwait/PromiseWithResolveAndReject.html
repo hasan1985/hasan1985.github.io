@@ -1,0 +1,72 @@
+<html>
+<style>
+body {
+    background-color: black;
+    color: white;    
+}
+
+</style>
+
+<body>
+
+<script>
+p = (...items) => console.log(...items);
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// my promise extension that has resolve or rejected function that can be called outside
+class MyPromise extends Promise {
+
+    constructor(f) {
+        let reject
+        let resolve
+
+        super((res, rej) => {
+
+             resolve = (v) => {
+                res(v)
+            }
+            reject = (v) => {
+                rej(v)
+            }
+            if (f) {
+            	// Promise.then(givenFunc) functions calls "this(givenFunc)" to create the 2nd new promise.
+            	// that new promise is returned from then for chaining purpose
+            	// now in regular Promise class "this()" is the constructor of Promise class, in this case MyPromise
+            	// details - https://stackoverflow.com/a/48159603/3590181 
+            	// see the B8 code - https://chromium.googlesource.com/v8/v8/+/3.29.45/src/promise.js?autodive=0%2F#197
+            	f(resolve, reject);
+            }
+        })
+        this.resolve = resolve;
+        this.reject = reject;
+    }
+}
+
+// test
+let myPromiseTest = new MyPromise();
+myPromiseTest.then((data) => console.log(data));
+// setTimeout(() => myPromiseTest.resolve("data from outside using my promise"), 1000);
+// my promise extension that has resolve or rejected function that can be called outside
+/////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// my promise 2
+class MyPromise2 {
+	constructor() {
+		this.promise = new Promise((res, rej) => {
+			this.resolve = res;
+			this.reject = rej;
+		})
+	}
+}
+// test
+let myPromise2 = new MyPromise2();
+myPromise2.promise.then((data) => p(data));
+// setTimeout(() => myPromise2.resolve("data from outside using my promise 2"), 500);
+// my promise 2
+/////////////////////////////////////////////////////////////////////////////////////////
+
+</script>
+
+</body>
+</html>

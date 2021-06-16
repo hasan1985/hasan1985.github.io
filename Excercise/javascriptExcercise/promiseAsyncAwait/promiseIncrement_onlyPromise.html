@@ -1,0 +1,89 @@
+<html>
+
+<style>
+</style>
+
+<body>
+
+
+<script>
+
+function delayedCounter(val) {
+	return new Promise(resolve => {
+		setTimeout(() => {
+			resolve(val+1);
+		}, 500);
+	});
+}
+function incrementer(init, func, max) {
+	let promises = [Promise.resolve(init)]; // same as [new Promise(resolve => resolve(init))]
+	return function() {
+		let prevPromise = promises[promises.length-1];
+		let nextPromise = new Promise(resolve => {
+			prevPromise.then((prevVal) => {
+				func(prevVal).then(nextValue => {
+					resolve(nextValue >= max ? max : nextValue);
+				});
+			})
+		});
+		promises.push(nextPromise);
+		return nextPromise;
+	}
+}
+const myCounter = incrementer(0, delayedCounter, 4);
+myCounter().then(i => console.log(i));
+myCounter().then(i => console.log(i));
+myCounter().then(i => console.log(i));
+myCounter().then(i => console.log(i));
+myCounter().then(i => console.log(i));	
+
+
+
+// got better - 
+function getCounter(init, fun, max) {
+	// no array is actually needed since only latest is needed
+	// saving the lastPromise in a closure
+    let lastPromise = Promise.resolve(init); 
+    
+    return function() {
+        const prevPromise = lastPromise;
+                
+        const newPromise = new Promise(res => {
+            lastPromise.then(data => {
+                if (data == max) {
+                	return Promise.resolve(max);
+                } else {
+                	return fun(data);
+                }
+            }).then(data => {
+                res(data);
+            })            
+        });
+
+        // short hand, even better
+//         const newPromise = prevPromise.then(data => {
+//             if (data === max) {
+//                 return Promise.resolve(max);
+//             } else {
+//                 return fun(data);   
+//             }
+//         })
+
+        lastPromise = newPromise;
+        return newPromise;
+
+        /* much more shorter just doing this will work
+        lastPromise = lastPromise.then(data => {
+            return data === max ? Promise.resolve(max) : fun(data);
+        })
+        return lastPromise;        
+        */
+    }
+}
+
+
+
+</script>
+
+</body>
+</html>

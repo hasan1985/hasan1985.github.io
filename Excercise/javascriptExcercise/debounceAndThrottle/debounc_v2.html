@@ -1,0 +1,80 @@
+<html>
+
+<style>
+body {
+    background-color: black;
+    color: white;    
+}
+</style>
+
+<body>
+<a href="https://www.telerik.com/blogs/debouncing-and-throttling-in-javascript" target="_blank">https://www.telerik.com/blogs/debouncing-and-throttling-in-javascript</a>
+Main different between throttling and debounce is that debounce needs to be stop firing event (cooling period) and stay cool for a given time before the given function is executed.
+If the event never stops firing the function will never execute.
+Throttling will execute the given function after the wait time even if the event is still being fired.
+
+<a href="https://gist.github.com/beaucharman/1f93fdd7c72860736643d1ab274fee1a">good discussion about context binding</a>
+
+<script>
+// because of it "this" will not point to global object (Window) inside a function execution by default
+'use strict';
+const obj1 = {
+    name: "obj1",
+    func(param) {
+        console.log(Date.now(), this.name, param);
+    }
+}
+
+function debounce(callback, delay) {
+    let timeout;
+    return function(...args) {
+        const context = this;
+        timeout && clearTimeout(timeout);
+        timeout = setTimeout(function() { // if use arrow function (or function(){}.bind(this)) then "context = this" is not needed
+            callback.apply(context, args) // the callback function might have binding to some context, in that case current conxent will have no effect
+        }, delay);
+    }   
+}
+
+obj1.debounceOfFunc = debounce(obj1.func, 100);
+let debounceOnBounedFunc = debounce(obj1.func.bind(obj1), 100); // works as actual function has binding
+let debounceWithBind = debounce(obj1.func, 100).bind(obj1); // also works
+let debounceWithArrow = debounce(() => obj1.func(), 100) // same as debounceOnBounedFunc
+
+let count = 0;
+let interval = setInterval(() => {
+    if (count == 4) clearInterval(interval);
+    // debounceOnBounedFunc(count); // works
+    // debounceWithBind(count); // works
+    // obj1.debounceOfFunc(); // works as "context/this" is found from "before dot" 
+    // debounceWithArrow(); // works
+    count++;
+}, 104)
+
+
+// debounce can have some variations
+// 1. should the callback be called asap and rest should be dropped untill there is a pause for the given delay/timeout
+// 2. should the subsequent call return the so far result.
+// 3. maxWait. The callback will be executed after maxWait time even if the event flow is not paused for the given delay yet.
+// lodash has option of both asap(leading) execution of call back and delayed(traling) execution of callback
+// it can have flush and cancel
+
+// todo - implement all these features. ex - https://github.com/lodash/lodash/blob/2da024c3b4f9947a48517639de7560457cd4ec6c/debounce.js
+
+function debounce_2(callback, delay, trailing = true, leading = false) {
+    let timeout;
+    let lastResult;
+    let debounced = function(...args) {
+        if (leading) {
+            callback.call(this, ...args);
+            calledOnce = true;
+        }
+    }
+
+    debounced.cancel = () => cancelTimeout(timeout);
+    return debounced;
+}
+</script>
+
+</body>
+</html>

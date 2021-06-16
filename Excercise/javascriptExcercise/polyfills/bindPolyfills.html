@@ -1,0 +1,42 @@
+<html>
+
+<style>
+body {
+    background-color: black;
+    color: white;    
+}
+
+</style>
+
+<body>
+
+<script>
+let obj = {
+    a: 10,
+}
+
+obj.fun = function(i1, i2, i3, i4) {
+    console.log(this.a, i1, i2, i3, i4);
+}.bind(obj, "i1_bound", "i2_bound");
+
+obj.fun("i2", "i3");
+
+Function.prototype.myBind = function(...boundArg) {
+    const fun = this;
+    const context = boundArg[0];
+    const boundArgumnets = boundArg.slice(1); // slicing context is not really needed.
+    return function(...funArg) {
+        fun.call(context, ...boundArgumnets, ...funArg);
+    }
+}
+
+obj.fun2 = function(i1, i2, i3, i4) {
+    console.log(this.a, i1, i2, i3, i4);
+}.myBind(obj, "i1_bound", "i2_bound");
+
+obj.fun2("i2", "i3");
+
+</script>
+
+</body>
+</html>

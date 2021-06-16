@@ -1,0 +1,75 @@
+<html>
+
+<style>
+body {
+    background-color: black;
+    color: white;    
+}
+
+</style>
+
+<body>
+
+
+<script>
+const cl = (...a) => console.log(...a);
+
+const p1 = new Promise((res, rej) => {
+    setTimeout(() => res("p1 done"), 200);
+})
+
+const p2 = new Promise((res, rej) => {
+    setTimeout(_ => res("p2 done"), 300);
+})
+
+const p3 = new Promise((res, rej) => {
+    //setTimeout(_ => rej(new Error("p3 failed")), 100);
+    setTimeout(_ => res("p3 done"), 100);
+})
+
+let promises = [p1,p2,p3, 10];
+
+Promise.all(promises)
+    .then((data) => cl("in then of all", data))
+    .catch(e => cl("in catch of all", e));
+
+Promise.myAll = function(promises) {
+    let convertedPromiseResolve;
+    let convertedPromiseReject;
+    let resolvedCount = 0;
+    let resolveData = Array(promises.length).fill(undefined);
+    
+    const convertedPromise = new Promise((res, rej) => {
+        convertedPromiseResolve = res;
+        convertedPromiseReject = rej;
+    });
+
+    promises.forEach((p, index) => {
+        
+        const promiseWrapper = Promise.resolve(p); // in case p is not a promise, thats why wrap it with Promise.resolve()
+
+        promiseWrapper.then(data => {
+            resolveData[index] = data;
+            resolvedCount++;
+            if (resolvedCount === promises.length) {
+                convertedPromiseResolve(resolveData);
+            }
+        }).catch(e => {
+            convertedPromiseReject(e);
+        })
+    })
+
+    return convertedPromise;
+}
+
+
+Promise.myAll(promises, true)
+    .then(data => console.log("in then of my all", data))
+    .catch(e => console.log("in catch of my all", e));
+
+
+
+</script>
+
+</body>
+</html>

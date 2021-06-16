@@ -1,0 +1,98 @@
+<html>
+
+<style>
+body {
+    background-color: black;
+    color: white;    
+}
+</style>
+
+<body>
+
+
+<!-- here "return false" is a hack to prevent form submit i.e. URL change -->
+<form name="form_1" onsubmit="submitForm(); return false;"> 
+    <div>
+        <label for="cars">Cars</label>
+        <select id="cars" name="form_ele_cars">
+            <option value="car-1">Car-1</option>
+            <option value="car-2">Car-2</option>
+        </select>
+    </div>
+    1
+    <div>
+        <label id="grouped_options">opt group</label>
+        <select id="grouped_options" name="form_ele_grouped_option">
+            <optgroup label="group_1">
+                <option value="opt1">op1</option>
+                <option value="opt2">op2</option>
+            </optgroup>
+            <optgroup label="group_2">
+                <option value="opt3">opt3</option>
+                <option value="opt4">opt4</option>
+            </optgroup>
+        </select>
+    </div>
+
+    <div>
+        <label for="multi_sel_options">Multi select option</label>
+        <select id="multi_sel_options" name="form_ele_multi_sel" size=3 multiple>
+            <option value="opt1">op1</option>
+            <option value="opt2">op2</option>
+            <option value="opt3">op3</option>
+            <option value="opt4">op4</option>
+        </select>
+    </div>
+
+    <div>
+    <label>grouped multi select</label>
+    <select id="multi grouped select" name="form_ele_multi_sel_grouped" multiple>
+        <optgroup label="group_1">
+            <option value="opt1">op1</option>
+            <option value="opt2">op2</option>   
+        </optgroup>
+        <optgroup label="group_2">
+            <option value="opt3">op3</option>
+            <option value="opt4">op4</option>   
+        </optgroup>
+    </select>
+    </div>
+
+    <div>
+        <label>data list</label>
+        <input list="example_datalist_id" name="data_list_input">
+        <datalist id="example_datalist_id">
+            <!-- https://stackoverflow.com/questions/13693482/is-there-a-way-to-apply-a-css-style-on-html5-datalist-options -->
+            <!-- data list option dropdown is not styleable -->
+            <option value="opt 1"></option>
+            <option value="opt 2"></option>
+            <option value="opt 3"></option>
+        </datalist>
+    </div>
+    
+    <div>
+        <lable for="text_area_id">text area</label>
+        <textarea id="text_area_id" name="text_area_name" cols=50 row=50></textarea>
+    </div>
+    
+    <input type="submit">
+</form>
+
+<script>
+p = (...a) => console.log(...a);
+
+function submitForm() {
+    console.log("submitted");
+    let form1 = document.forms.form_1
+    p("select option", form1.form_ele_cars.value);
+    p("grouped select option", form1.form_ele_grouped_option.value);
+    p("multi select option", Array.from(form1.form_ele_multi_sel).filter(op => op.selected).map(op => op.value));
+    p("multi select option grouped", Array.from(form1.form_ele_multi_sel_grouped).filter(op => op.selected).map(op => op.value));
+    p("data list input", form1.data_list_input.value);
+    p("text area input", form1.text_area_name.value);
+}
+
+</script>
+
+</body>
+</html>
